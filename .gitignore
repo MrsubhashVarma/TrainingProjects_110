@@ -22,3 +22,7 @@ Thumbs.db
 # To-Do List Application specific ignores
 tasks_db.json
 .venv/
+
+# Library Book Management specific ignores
+books_db.json
+
