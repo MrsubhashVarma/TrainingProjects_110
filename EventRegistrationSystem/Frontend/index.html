@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration Management System</title>
+    <!-- Modern Premium Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Animated Blobs for Glassmorphism Effect -->
+    <div class="blob blob-indigo"></div>
+    <div class="blob blob-violet"></div>
+    
+    <div class="app-container">
+        <!-- Premium Navigation/Header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <i class="fa-solid fa-graduation-cap logo-icon"></i>
+                <div class="logo-text">
+                    <h1>Event Registration Management</h1>
+                    <p>Track, manage, and coordinate participant registrations</p>
+                </div>
+            </div>
+            <!-- Database Connection Status Indicator -->
+            <div class="status-badge" id="db-status-badge">
+                <span class="status-dot pulse"></span>
+                <span id="db-status-text">Connecting Backend...</span>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Layout -->
+        <main class="dashboard-grid">
+            
+            <!-- Left Side: Registration Form Card -->
+            <section class="panel-card form-panel">
+                <div class="card-header">
+                    <h2 id="form-title-text"><i class="fa-solid fa-user-plus header-icon"></i> Register Participant</h2>
+                    <p id="form-desc-text">Add details to register a participant for an event</p>
+                </div>
+                
+                <form id="participant-form" novalidate>
+                    <!-- Participant ID -->
+                    <div class="form-group">
+                        <label for="participant_id">Participant ID <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-hashtag input-icon"></i>
+                            <input type="number" id="participant_id" placeholder="e.g. 1006" min="1" required>
+                        </div>
+                        <span class="error-msg" id="error-participant_id"></span>
+                    </div>
+
+                    <!-- Full Name -->
+                    <div class="form-group">
+                        <label for="full_name">Full Name <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-user input-icon"></i>
+                            <input type="text" id="full_name" placeholder="e.g. Rahul Sharma" required>
+                        </div>
+                        <span class="error-msg" id="error-full_name"></span>
+                    </div>
+
+                    <!-- Email Address -->
+                    <div class="form-group">
+                        <label for="email">Email <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-envelope input-icon"></i>
+                            <input type="email" id="email" placeholder="e.g. rahul@gmail.com" required>
+                        </div>
+                        <span class="error-msg" id="error-email"></span>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div class="form-group">
+                        <label for="phone">Phone <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-phone input-icon"></i>
+                            <input type="tel" id="phone" placeholder="e.g. 9876543210" required>
+                        </div>
+                        <span class="error-msg" id="error-phone"></span>
+                    </div>
+
+                    <!-- College Name -->
+                    <div class="form-group">
+                        <label for="college">College <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-building-columns input-icon"></i>
+                            <input type="text" id="college" placeholder="e.g. ABC Engineering College" required>
+                        </div>
+                        <span class="error-msg" id="error-college"></span>
+                    </div>
+
+                    <!-- Event Name & Registration Fee in Grid -->
+                    <div class="form-row">
+                        <!-- Event Name -->
+                        <div class="form-group">
+                            <label for="event_name">Event Name <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-calendar-star input-icon"></i>
+                                <input type="text" id="event_name" placeholder="e.g. Hackathon 2026" list="events-list" required>
+                                <datalist id="events-list">
+                                    <option value="Hackathon 2026">
+                                    <option value="AI Workshop">
+                                    <option value="Web Development Bootcamp">
+                                    <option value="Cloud Computing Seminar">
+                                    <option value="Python Programming Workshop">
+                                </datalist>
+                            </div>
+                            <span class="error-msg" id="error-event_name"></span>
+                        </div>
+
+                        <!-- Registration Fee -->
+                        <div class="form-group">
+                            <label for="registration_fee">Registration Fee (₹) <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-indian-rupee-sign input-icon"></i>
+                                <input type="number" id="registration_fee" placeholder="500" min="0" required>
+                            </div>
+                            <span class="error-msg" id="error-registration_fee"></span>
+                        </div>
+                    </div>
+
+                    <!-- Submit Actions -->
+                    <div class="form-actions">
+                        <button type="submit" id="submit-btn" class="btn btn-primary">
+                            <span id="btn-text">Register Participant</span>
+                            <i class="fa-solid fa-arrow-right btn-icon"></i>
+                        </button>
+                        <button type="button" id="cancel-btn" class="btn btn-secondary hidden">
+                            <span>Cancel Edit</span>
+                            <i class="fa-solid fa-xmark btn-icon"></i>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Right Side: Registered Participant List Card -->
+            <section class="panel-card list-panel">
+                <div class="list-header">
+                    <div class="header-titles">
+                        <h2><i class="fa-solid fa-users header-icon"></i> Participant List</h2>
+                        <p>Search and manage registered event participants</p>
+                    </div>
+                    <!-- Quick Search / Filter Input -->
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="search-input" placeholder="Search by name, ID, college, event...">
+                    </div>
+                </div>
+
+                <!-- Scrollable Participant Grid -->
+                <div class="participants-scroll-container">
+                    <div id="participants-list" class="participants-list">
+                        <!-- Loading State Placeholder -->
+                        <div class="loading-state" id="loading-indicator">
+                            <div class="spinner"></div>
+                            <p>Fetching participants from database...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Summary info -->
+                <div class="table-footer">
+                    <span id="total-count">Total: 0 participants</span>
+                    <button id="refresh-btn" class="btn btn-text">
+                        <i class="fa-solid fa-arrows-rotate"></i> Sync Data
+                    </button>
+                </div>
+            </section>
+        </main>
+        
+        <!-- App Footer -->
+        <footer class="app-footer-bar">
+            <p>&copy; 2026 Event Registration Management System. Powered by Django, PyMongo & MongoDB Atlas.</p>
+        </footer>
+    </div>
+
+    <!-- Notification Toast Alerts Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Confirmation Delete Dialog Modal -->
+    <div id="delete-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-icon">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3>Delete Registration?</h3>
+            <p>Are you sure you want to remove <strong id="delete-participant-name">Participant</strong> from this event? This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button type="button" id="confirm-delete-btn" class="btn btn-danger">Yes, Delete</button>
+                <button type="button" id="cancel-delete-btn" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

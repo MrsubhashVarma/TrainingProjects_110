@@ -1,0 +1,18 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Database
+db.sqlite3
+participants_db.json
+
+# Log files
+*.log
