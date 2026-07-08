@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Exclusive flight booking offers and discounts. Save big on your next trip with student, family, and seasonal deals.">
+  <title>Offers & Deals — Vimaan Airways</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo"><span class="logo-icon">✈️</span> Vimaan Airways</a>
+      <div class="nav-links" id="navLinks">
+        <a href="../index.html">Home</a>
+        <a href="flights.html">Flights</a>
+        <a href="../index.html#destinations">Destinations</a>
+        <a href="offers.html" class="active">Offers</a>
+        <a href="my-bookings.html">My Bookings</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+        <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-overlay"></div>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1>🎁 Offers & Deals</h1>
+    <p>Grab exclusive discounts and save on your next flight</p>
+  </div>
+
+  <!-- Offers Content -->
+  <section class="offers-page">
+    <div class="container">
+      <div class="offers-page-grid">
+
+        <div class="offer-page-card animate-on-scroll slide-up">
+          <div class="offer-icon" style="font-size: 2rem; background: none; width: auto; height: auto;">🎓</div>
+          <div class="discount-amount">15% OFF</div>
+          <h3>Student Discount</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 12px;">Get 15% off on all domestic and international flights. Show a valid student ID at check-in to avail this offer. Applicable on all travel classes.</p>
+          <div style="padding: 12px; background: var(--bg-secondary); border-radius: var(--radius-sm); margin-bottom: 16px;">
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Promo Code:</span>
+            <span style="font-weight: 700; color: var(--accent); font-size: 1.1rem; margin-left: 8px;">STUDENT15</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">⏰ Offer expires in:</p>
+          <div class="countdown" data-expiry="2026-07-11T23:59:59"></div>
+          <button class="btn btn-primary btn-block" style="margin-top: 20px;" onclick="applyOffer(1)">Apply Offer</button>
+        </div>
+
+        <div class="offer-page-card animate-on-scroll slide-up" style="animation-delay: 0.1s;">
+          <div class="offer-icon" style="font-size: 2rem; background: none; width: auto; height: auto;">🎉</div>
+          <div class="discount-amount">₹2,000 OFF</div>
+          <h3>Festival Special</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 12px;">Celebrate the festive season with a flat ₹2000 off on round-trip bookings. Valid on all routes and airlines.</p>
+          <div style="padding: 12px; background: var(--bg-secondary); border-radius: var(--radius-sm); margin-bottom: 16px;">
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Promo Code:</span>
+            <span style="font-weight: 700; color: var(--accent); font-size: 1.1rem; margin-left: 8px;">FESTIVE2K</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">⏰ Offer expires in:</p>
+          <div class="countdown" data-expiry="2026-07-13T23:59:59"></div>
+          <button class="btn btn-primary btn-block" style="margin-top: 20px;" onclick="applyOffer(2)">Apply Offer</button>
+        </div>
+
+        <div class="offer-page-card animate-on-scroll slide-up" style="animation-delay: 0.2s;">
+          <div class="offer-icon" style="font-size: 2rem; background: none; width: auto; height: auto;">👨‍👩‍👧‍👦</div>
+          <div class="discount-amount">20% OFF</div>
+          <h3>Family Package</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 12px;">Book for 4 or more passengers and get 20% discount on total fare. Makes family travel affordable and fun!</p>
+          <div style="padding: 12px; background: var(--bg-secondary); border-radius: var(--radius-sm); margin-bottom: 16px;">
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Promo Code:</span>
+            <span style="font-weight: 700; color: var(--accent); font-size: 1.1rem; margin-left: 8px;">FAMILY20</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">⏰ Offer expires in:</p>
+          <div class="countdown" data-expiry="2026-07-15T23:59:59"></div>
+          <button class="btn btn-primary btn-block" style="margin-top: 20px;" onclick="applyOffer(3)">Apply Offer</button>
+        </div>
+
+        <div class="offer-page-card animate-on-scroll slide-up" style="animation-delay: 0.3s;">
+          <div class="offer-icon" style="font-size: 2rem; background: none; width: auto; height: auto;">💳</div>
+          <div class="discount-amount">10% CASHBACK</div>
+          <h3>Credit Card Offer</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 12px;">Pay with partner credit cards and enjoy up to 10% cashback. Maximum cashback ₹3000 per booking.</p>
+          <div style="padding: 12px; background: var(--bg-secondary); border-radius: var(--radius-sm); margin-bottom: 16px;">
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Promo Code:</span>
+            <span style="font-weight: 700; color: var(--accent); font-size: 1.1rem; margin-left: 8px;">CCBACK10</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">⏰ Offer expires in:</p>
+          <div class="countdown" data-expiry="2026-07-10T23:59:59"></div>
+          <button class="btn btn-primary btn-block" style="margin-top: 20px;" onclick="applyOffer(4)">Apply Offer</button>
+        </div>
+
+        <div class="offer-page-card animate-on-scroll slide-up" style="animation-delay: 0.4s;">
+          <div class="offer-icon" style="font-size: 2rem; background: none; width: auto; height: auto;">🐦</div>
+          <div class="discount-amount">25% OFF</div>
+          <h3>Early Bird Discount</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 12px;">Book 30 days in advance and save 25% on base fare. The earlier you book, the more you save!</p>
+          <div style="padding: 12px; background: var(--bg-secondary); border-radius: var(--radius-sm); margin-bottom: 16px;">
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Promo Code:</span>
+            <span style="font-weight: 700; color: var(--accent); font-size: 1.1rem; margin-left: 8px;">EARLY25</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">⏰ Offer expires in:</p>
+          <div class="countdown" data-expiry="2026-07-18T23:59:59"></div>
+          <button class="btn btn-primary btn-block" style="margin-top: 20px;" onclick="applyOffer(5)">Apply Offer</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>✈️ Vimaan Airways</h3>
+          <p>Your trusted partner for premium flight bookings worldwide.</p>
+          <div class="social-links"><a href="#">📘</a><a href="#">🐦</a><a href="#">📷</a><a href="#">💼</a></div>
+        </div>
+        <div class="footer-column"><h4>Quick Links</h4><ul><li><a href="about.html">About</a></li><li><a href="my-bookings.html">My Bookings</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="footer-column"><h4>Support</h4><ul><li><a href="#">Help Center</a></li><li><a href="#">Terms</a></li><li><a href="#">Privacy</a></li></ul></div>
+        <div class="footer-column"><h4>Destinations</h4><ul><li><a href="flights.html?to=DXB">Dubai</a></li><li><a href="flights.html?to=LHR">London</a></li><li><a href="flights.html?to=SIN">Singapore</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p>© 2026 Vimaan Airways. All rights reserved.</p></div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="Back to top">↑</button>
+  <script src="../script.js"></script>
+</body>
+</html>

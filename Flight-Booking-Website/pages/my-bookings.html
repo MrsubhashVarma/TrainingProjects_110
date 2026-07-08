@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View and manage your past flight bookings. Track booking status and details.">
+  <title>My Bookings — Vimaan Airways</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo"><span class="logo-icon">✈️</span> Vimaan Airways</a>
+      <div class="nav-links" id="navLinks">
+        <a href="../index.html">Home</a>
+        <a href="flights.html">Flights</a>
+        <a href="../index.html#destinations">Destinations</a>
+        <a href="offers.html">Offers</a>
+        <a href="my-bookings.html" class="active">My Bookings</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+        <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-overlay"></div>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1>📋 My Bookings</h1>
+    <p>View and manage all your flight bookings</p>
+  </div>
+
+  <!-- Bookings Content -->
+  <section class="my-bookings-page">
+    <div class="container">
+      <div id="bookingsList">
+        <!-- Bookings will be rendered here by JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>✈️ Vimaan Airways</h3>
+          <p>Your trusted partner for premium flight bookings worldwide.</p>
+          <div class="social-links"><a href="#">📘</a><a href="#">🐦</a><a href="#">📷</a><a href="#">💼</a></div>
+        </div>
+        <div class="footer-column"><h4>Quick Links</h4><ul><li><a href="about.html">About</a></li><li><a href="offers.html">Offers</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="footer-column"><h4>Support</h4><ul><li><a href="#">Help Center</a></li><li><a href="#">Terms</a></li><li><a href="#">Privacy</a></li></ul></div>
+        <div class="footer-column"><h4>Destinations</h4><ul><li><a href="flights.html?to=DXB">Dubai</a></li><li><a href="flights.html?to=LHR">London</a></li><li><a href="flights.html?to=SIN">Singapore</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p>© 2026 Vimaan Airways. All rights reserved.</p></div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="Back to top">↑</button>
+  <script src="../script.js"></script>
+</body>
+</html>

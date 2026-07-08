@@ -1,18 +1,28 @@
-# Python cache files
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-
 # Database
 db.sqlite3
 participants_db.json
+books_db.json
+tasks_db.json
+
+# Environment
+.env
+venv/
+env/
+.venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+.DS_Store
 
 # Log files
 *.log

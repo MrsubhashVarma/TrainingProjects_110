@@ -1,0 +1,11 @@
+# Netlify configuration file for automatic build configuration
+
+[build]
+  # Direct Netlify to publish the static Frontend directory
+  publish = "LibraryManagement/Frontend"
+
+# Ensure all routes serve index.html for Single Page Application routing if needed
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Vimaan Airways — Book flights to 500+ destinations worldwide. Find the best deals on domestic and international flights with premium booking experience.">
+  <title>Vimaan Airways — Premium Flight Booking</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">✈️</span> Vimaan Airways
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" class="active">Home</a>
+        <a href="#search">Flights</a>
+        <a href="#destinations">Destinations</a>
+        <a href="pages/offers.html">Offers</a>
+        <a href="pages/my-bookings.html">My Bookings</a>
+        <a href="pages/about.html">About</a>
+        <a href="pages/contact.html">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="floating-plane" style="top: 20%; animation-delay: 0s;">✈️</div>
+    <div class="floating-plane" style="top: 60%; animation-delay: -8s; font-size: 2rem;">✈️</div>
+    <div class="floating-cloud" style="top: 15%; animation-delay: -5s;">☁️</div>
+    <div class="floating-cloud" style="top: 50%; animation-delay: -15s;">☁️</div>
+    <div class="floating-cloud" style="top: 75%; animation-delay: -22s; font-size: 3rem;">☁️</div>
+
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1>Discover the World with <span>Vimaan Airways</span></h1>
+        <p>Book your next adventure with premium comfort. Explore 500+ destinations across the globe with unbeatable prices and world-class service.</p>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+          <a href="#search" class="btn btn-primary btn-lg">🔍 Search Flights</a>
+          <a href="pages/offers.html" class="btn btn-outline btn-lg" style="border-color: rgba(255,255,255,0.3); color: #fff;">🎁 View Offers</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <h3>500+</h3>
+            <p>Destinations</p>
+          </div>
+          <div class="hero-stat">
+            <h3>2M+</h3>
+            <p>Happy Travelers</p>
+          </div>
+          <div class="hero-stat">
+            <h3>50+</h3>
+            <p>Airlines</p>
+          </div>
+          <div class="hero-stat">
+            <h3>4.9★</h3>
+            <p>User Rating</p>
+          </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- Flight Search -->
+  <section class="search-section" id="search">
+    <div class="container">
+      <div class="search-widget">
+        <h2>🔍 Search Flights</h2>
+
+        <div class="trip-type-toggle">
+          <button class="trip-type-btn active" data-type="roundtrip">Round Trip</button>
+          <button class="trip-type-btn" data-type="oneway">One Way</button>
+        </div>
+
+        <form id="searchForm">
+          <div class="search-grid">
+            <div class="form-group">
+              <label for="fromAirport">From</label>
+              <select id="fromAirport" required>
+                <option value="">Select Departure</option>
+                <option value="DEL">New Delhi (DEL)</option>
+                <option value="BOM">Mumbai (BOM)</option>
+                <option value="BLR">Bangalore (BLR)</option>
+                <option value="CCU">Kolkata (CCU)</option>
+                <option value="HYD">Hyderabad (HYD)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="toAirport">To</label>
+              <select id="toAirport" required>
+                <option value="">Select Arrival</option>
+                <option value="DXB">Dubai (DXB)</option>
+                <option value="SIN">Singapore (SIN)</option>
+                <option value="LHR">London (LHR)</option>
+                <option value="CDG">Paris (CDG)</option>
+                <option value="JFK">New York (JFK)</option>
+                <option value="NRT">Tokyo (NRT)</option>
+                <option value="BKK">Bangkok (BKK)</option>
+                <option value="SYD">Sydney (SYD)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="departureDate">Departure</label>
+              <input type="date" id="departureDate" required>
+            </div>
+            <div class="form-group" id="returnDateGroup">
+              <label for="returnDate">Return</label>
+              <input type="date" id="returnDate">
+            </div>
+          </div>
+          <div class="search-grid-bottom">
+            <div class="form-group">
+              <label for="passengers">Passengers</label>
+              <select id="passengers">
+                <option value="1">1 Passenger</option>
+                <option value="2">2 Passengers</option>
+                <option value="3">3 Passengers</option>
+                <option value="4">4 Passengers</option>
+                <option value="5">5 Passengers</option>
+                <option value="6">6 Passengers</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="travelClass">Class</label>
+              <select id="travelClass">
+                <option value="economy">Economy</option>
+                <option value="premium_economy">Premium Economy</option>
+                <option value="business">Business</option>
+                <option value="first">First Class</option>
+              </select>
+            </div>
+            <div class="form-group" style="visibility: hidden;">
+              <label>&nbsp;</label>
+              <input type="text" style="visibility: hidden;">
+            </div>
+            <button type="submit" class="search-btn">✈️ Search Flights</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Destinations -->
+  <section class="destinations-section" id="destinations">
+    <div class="container">
+      <h2 class="section-title">Popular Destinations</h2>
+      <p class="section-subtitle">Explore breathtaking destinations around the world with exclusive deals and premium travel experiences.</p>
+
+      <div class="destinations-grid">
+        <div class="destination-card animate-on-scroll fade-in">
+          <img src="assets/images/destinations/dubai.png" alt="Dubai Skyline" loading="lazy">
+          <div class="overlay">
+            <h3>Dubai</h3>
+            <p class="price">Starting from <strong>₹15,200</strong></p>
+            <a href="pages/flights.html?to=DXB" class="btn btn-primary btn-sm">Explore →</a>
+          </div>
+        </div>
+
+        <div class="destination-card animate-on-scroll fade-in" style="animation-delay: 0.1s;">
+          <img src="assets/images/destinations/singapore.png" alt="Singapore Skyline" loading="lazy">
+          <div class="overlay">
+            <h3>Singapore</h3>
+            <p class="price">Starting from <strong>₹17,500</strong></p>
+            <a href="pages/flights.html?to=SIN" class="btn btn-primary btn-sm">Explore →</a>
+          </div>
+        </div>
+
+        <div class="destination-card animate-on-scroll fade-in" style="animation-delay: 0.2s;">
+          <img src="assets/images/destinations/london.png" alt="London Skyline" loading="lazy">
+          <div class="overlay">
+            <h3>London</h3>
+            <p class="price">Starting from <strong>₹30,500</strong></p>
+            <a href="pages/flights.html?to=LHR" class="btn btn-primary btn-sm">Explore →</a>
+          </div>
+        </div>
+
+        <div class="destination-card animate-on-scroll fade-in" style="animation-delay: 0.3s;">
+          <img src="assets/images/destinations/paris.png" alt="Paris Eiffel Tower" loading="lazy">
+          <div class="overlay">
+            <h3>Paris</h3>
+            <p class="price">Starting from <strong>₹28,500</strong></p>
+            <a href="pages/flights.html?to=CDG" class="btn btn-primary btn-sm">Explore →</a>
+          </div>
+        </div>
+
+        <div class="destination-card animate-on-scroll fade-in" style="animation-delay: 0.4s;">
+          <img src="assets/images/destinations/newyork.png" alt="New York City" loading="lazy">
+          <div class="overlay">
+            <h3>New York</h3>
+            <p class="price">Starting from <strong>₹45,000</strong></p>
+            <a href="pages/flights.html?to=JFK" class="btn btn-primary btn-sm">Explore →</a>
+          </div>
+        </div>
+
+        <div class="destination-card animate-on-scroll fade-in" style="animation-delay: 0.5s;">
+          <img src="assets/images/destinations/tokyo.png" alt="Tokyo Skyline" loading="lazy">
+          <div class="overlay">
+            <h3>Tokyo</h3>
+            <p class="price">Starting from <strong>₹35,200</strong></p>
+            <a href="pages/flights.html?to=NRT" class="btn btn-primary btn-sm">Explore →</a>
+          </div>
+        </div>
+
+        <div class="destination-card animate-on-scroll fade-in" style="animation-delay: 0.6s;">
+          <img src="assets/images/destinations/bangkok.png" alt="Bangkok Temple" loading="lazy">
+          <div class="overlay">
+            <h3>Bangkok</h3>
+            <p class="price">Starting from <strong>₹11,500</strong></p>
+            <a href="pages/flights.html?to=BKK" class="btn btn-primary btn-sm">Explore →</a>
+          </div>
+        </div>
+
+        <div class="destination-card animate-on-scroll fade-in" style="animation-delay: 0.7s;">
+          <img src="assets/images/destinations/sydney.png" alt="Sydney Opera House" loading="lazy">
+          <div class="overlay">
+            <h3>Sydney</h3>
+            <p class="price">Starting from <strong>₹42,000</strong></p>
+            <a href="pages/flights.html?to=SYD" class="btn btn-primary btn-sm">Explore →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Offers -->
+  <section class="offers-section" id="offers">
+    <div class="container">
+      <h2 class="section-title">Exclusive Offers</h2>
+      <p class="section-subtitle">Grab incredible deals and save big on your next flight booking.</p>
+
+      <div class="offers-grid">
+        <div class="offer-card animate-on-scroll slide-up">
+          <div class="offer-icon">🎓</div>
+          <span class="offer-badge">15% OFF</span>
+          <h3>Student Discount</h3>
+          <p>Get 15% off on all domestic and international flights. Valid student ID required at check-in.</p>
+          <div class="countdown" data-expiry="2026-07-11T23:59:59"></div>
+          <button class="btn btn-secondary btn-sm" style="margin-top: 16px;" onclick="applyOffer(1)">Apply Offer</button>
+        </div>
+
+        <div class="offer-card animate-on-scroll slide-up" style="animation-delay: 0.1s;">
+          <div class="offer-icon">🎉</div>
+          <span class="offer-badge">₹2000 OFF</span>
+          <h3>Festival Special</h3>
+          <p>Celebrate with amazing deals! Flat ₹2000 off on round-trip bookings during the festive season.</p>
+          <div class="countdown" data-expiry="2026-07-13T23:59:59"></div>
+          <button class="btn btn-secondary btn-sm" style="margin-top: 16px;" onclick="applyOffer(2)">Apply Offer</button>
+        </div>
+
+        <div class="offer-card animate-on-scroll slide-up" style="animation-delay: 0.2s;">
+          <div class="offer-icon">👨‍👩‍👧‍👦</div>
+          <span class="offer-badge">20% OFF</span>
+          <h3>Family Package</h3>
+          <p>Book for 4 or more passengers and get 20% discount on total fare. Perfect for family trips.</p>
+          <div class="countdown" data-expiry="2026-07-15T23:59:59"></div>
+          <button class="btn btn-secondary btn-sm" style="margin-top: 16px;" onclick="applyOffer(3)">Apply Offer</button>
+        </div>
+
+        <div class="offer-card animate-on-scroll slide-up" style="animation-delay: 0.3s;">
+          <div class="offer-icon">💳</div>
+          <span class="offer-badge">10% CASHBACK</span>
+          <h3>Credit Card Offer</h3>
+          <p>Pay with partner credit cards and enjoy up to 10% cashback. Maximum cashback ₹3000.</p>
+          <div class="countdown" data-expiry="2026-07-10T23:59:59"></div>
+          <button class="btn btn-secondary btn-sm" style="margin-top: 16px;" onclick="applyOffer(4)">Apply Offer</button>
+        </div>
+
+        <div class="offer-card animate-on-scroll slide-up" style="animation-delay: 0.4s;">
+          <div class="offer-icon">🐦</div>
+          <span class="offer-badge">25% OFF</span>
+          <h3>Early Bird Discount</h3>
+          <p>Book 30 days in advance and save 25% on base fare. Plan ahead and save more!</p>
+          <div class="countdown" data-expiry="2026-07-18T23:59:59"></div>
+          <button class="btn btn-secondary btn-sm" style="margin-top: 16px;" onclick="applyOffer(5)">Apply Offer</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Flight Schedule -->
+  <section class="schedule-section" id="schedule">
+    <div class="container">
+      <h2 class="section-title">Flight Schedule</h2>
+      <p class="section-subtitle">Track real-time flight statuses and schedules across all airlines.</p>
+
+      <div class="animate-on-scroll slide-up">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>Airline</th>
+              <th>Flight No.</th>
+              <th>Departure</th>
+              <th>Arrival</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>✈️ Vimaan Airways Air</td><td>SV-101</td><td>06:00 - DEL</td><td>08:30 - DXB</td>
+              <td><span class="status-badge status-ontime">On Time</span></td>
+            </tr>
+            <tr>
+              <td>🦅 IndiaWings</td><td>IW-205</td><td>10:15 - BOM</td><td>18:45 - SIN</td>
+              <td><span class="status-badge status-delayed">Delayed</span></td>
+            </tr>
+            <tr>
+              <td>🌐 AeroConnect</td><td>AC-310</td><td>22:00 - DEL</td><td>04:30 - LHR</td>
+              <td><span class="status-badge status-ontime">On Time</span></td>
+            </tr>
+            <tr>
+              <td>🚀 FlyEast</td><td>FE-412</td><td>14:30 - BLR</td><td>22:00 - CDG</td>
+              <td><span class="status-badge status-boarding">Boarding</span></td>
+            </tr>
+            <tr>
+              <td>✈️ Vimaan Airways Air</td><td>SV-520</td><td>01:30 - DEL</td><td>07:00 - JFK</td>
+              <td><span class="status-badge status-landed">Landed</span></td>
+            </tr>
+            <tr>
+              <td>🛩️ PacificJet</td><td>PJ-630</td><td>23:45 - BOM</td><td>12:15 - NRT</td>
+              <td><span class="status-badge status-ontime">On Time</span></td>
+            </tr>
+            <tr>
+              <td>🦅 IndiaWings</td><td>IW-740</td><td>08:00 - DEL</td><td>13:30 - BKK</td>
+              <td><span class="status-badge status-cancelled">Cancelled</span></td>
+            </tr>
+            <tr>
+              <td>🌐 AeroConnect</td><td>AC-855</td><td>16:00 - BLR</td><td>06:30 - SYD</td>
+              <td><span class="status-badge status-ontime">On Time</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Baggage Information -->
+  <section class="baggage-section" id="baggage">
+    <div class="container">
+      <h2 class="section-title">Baggage Information</h2>
+      <p class="section-subtitle">Know your baggage allowance before you fly.</p>
+
+      <div class="baggage-grid">
+        <div class="baggage-card animate-on-scroll zoom-in">
+          <div class="icon">🎒</div>
+          <h3>Cabin Baggage</h3>
+          <p>One carry-on bag allowed per passenger. Must fit in overhead bin or under seat.</p>
+          <div class="weight">7 kg</div>
+        </div>
+        <div class="baggage-card animate-on-scroll zoom-in" style="animation-delay: 0.1s;">
+          <div class="icon">🧳</div>
+          <h3>Check-in Baggage</h3>
+          <p>Standard check-in baggage allowance included with your ticket. Weight varies by class.</p>
+          <div class="weight">15-35 kg</div>
+        </div>
+        <div class="baggage-card animate-on-scroll zoom-in" style="animation-delay: 0.2s;">
+          <div class="icon">💰</div>
+          <h3>Extra Baggage</h3>
+          <p>Need more space? Add extra baggage at affordable rates during booking or at the airport.</p>
+          <div class="weight">₹500/kg</div>
+        </div>
+        <div class="baggage-card animate-on-scroll zoom-in" style="animation-delay: 0.3s;">
+          <div class="icon">🚫</div>
+          <h3>Restricted Items</h3>
+          <p>Flammable materials, sharp objects, explosives, and liquids over 100ml are prohibited in cabin.</p>
+          <div class="weight">Check Policy</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Customer Reviews -->
+  <section class="reviews-section" id="reviews">
+    <div class="container">
+      <h2 class="section-title">What Travelers Say</h2>
+      <p class="section-subtitle">Hear from our happy customers who trusted Vimaan Airways for their journey.</p>
+
+      <div class="reviews-grid">
+        <div class="review-card animate-on-scroll slide-up">
+          <div class="review-header">
+            <div class="review-avatar">AP</div>
+            <div>
+              <h4>Aisha Patel</h4>
+              <span class="location">Mumbai, India</span>
+            </div>
+          </div>
+          <div class="review-stars">⭐⭐⭐⭐⭐</div>
+          <p>"Incredible experience! The booking process was seamless and the flight was perfect. Will definitely use Vimaan Airways again for all my travels."</p>
+        </div>
+
+        <div class="review-card animate-on-scroll slide-up" style="animation-delay: 0.1s;">
+          <div class="review-header">
+            <div class="review-avatar">JW</div>
+            <div>
+              <h4>James Wilson</h4>
+              <span class="location">London, UK</span>
+            </div>
+          </div>
+          <div class="review-stars">⭐⭐⭐⭐⭐</div>
+          <p>"Best flight booking platform I've used. The seat selection feature is brilliant and the prices are very competitive. Highly recommended!"</p>
+        </div>
+
+        <div class="review-card animate-on-scroll slide-up" style="animation-delay: 0.2s;">
+          <div class="review-header">
+            <div class="review-avatar">ST</div>
+            <div>
+              <h4>Sakura Tanaka</h4>
+              <span class="location">Tokyo, Japan</span>
+            </div>
+          </div>
+          <div class="review-stars">⭐⭐⭐⭐</div>
+          <p>"Very user-friendly interface with great deals. I saved a lot on my family trip to Bangkok. The customer support was also very helpful."</p>
+        </div>
+
+        <div class="review-card animate-on-scroll slide-up" style="animation-delay: 0.3s;">
+          <div class="review-header">
+            <div class="review-avatar">CR</div>
+            <div>
+              <h4>Carlos Rodriguez</h4>
+              <span class="location">New York, USA</span>
+            </div>
+          </div>
+          <div class="review-stars">⭐⭐⭐⭐⭐</div>
+          <p>"Found amazing deals for my trip to Dubai. The whole experience from booking to boarding was flawless. Outstanding service!"</p>
+        </div>
+
+        <div class="review-card animate-on-scroll slide-up" style="animation-delay: 0.4s;">
+          <div class="review-header">
+            <div class="review-avatar">PS</div>
+            <div>
+              <h4>Priya Sharma</h4>
+              <span class="location">Delhi, India</span>
+            </div>
+          </div>
+          <div class="review-stars">⭐⭐⭐⭐</div>
+          <p>"Love the dark mode feature and the clean design. Booking flights has never been this easy. Great job on the offers section too!"</p>
+        </div>
+
+        <div class="review-card animate-on-scroll slide-up" style="animation-delay: 0.5s;">
+          <div class="review-header">
+            <div class="review-avatar">MC</div>
+            <div>
+              <h4>Michael Chen</h4>
+              <span class="location">Singapore</span>
+            </div>
+          </div>
+          <div class="review-stars">⭐⭐⭐⭐⭐</div>
+          <p>"The fare breakdown is transparent and I appreciate the baggage information upfront. No hidden charges. This is how booking should be!"</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section" id="faq">
+    <div class="container">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <p class="section-subtitle">Find answers to the most commonly asked questions about our services.</p>
+
+      <div class="faq-container">
+        <div class="faq-item animate-on-scroll fade-in">
+          <button class="faq-question">
+            <span>How do I book a flight?</span>
+            <span class="icon">▼</span>
+          </button>
+          <div class="faq-answer">
+            <p>Simply use our search widget on the homepage to enter your departure and arrival cities, select your travel dates, number of passengers, and preferred class. Click "Search Flights" to see available options. Select your preferred flight, fill in passenger details, choose your seat, and complete the booking.</p>
+          </div>
+        </div>
+
+        <div class="faq-item animate-on-scroll fade-in" style="animation-delay: 0.1s;">
+          <button class="faq-question">
+            <span>Can I cancel my ticket?</span>
+            <span class="icon">▼</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes, you can cancel your ticket up to 24 hours before the departure time. Cancellation charges may apply depending on the fare type and airline policy. Refunds are processed within 5-7 business days to the original payment method.</p>
+          </div>
+        </div>
+
+        <div class="faq-item animate-on-scroll fade-in" style="animation-delay: 0.2s;">
+          <button class="faq-question">
+            <span>Is online check-in available?</span>
+            <span class="icon">▼</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes, online check-in is available for most airlines 48 hours before departure. You can check in through the airline's website or app using your booking reference number. After check-in, you can download your boarding pass directly.</p>
+          </div>
+        </div>
+
+        <div class="faq-item animate-on-scroll fade-in" style="animation-delay: 0.3s;">
+          <button class="faq-question">
+            <span>What documents are required for international travel?</span>
+            <span class="icon">▼</span>
+          </button>
+          <div class="faq-answer">
+            <p>For international travel, you need a valid passport (with at least 6 months validity), visa for the destination country (if required), return/onward ticket, and proof of accommodation. Some countries may require additional documents such as COVID vaccination certificates or travel insurance.</p>
+          </div>
+        </div>
+
+        <div class="faq-item animate-on-scroll fade-in" style="animation-delay: 0.4s;">
+          <button class="faq-question">
+            <span>Can I change my travel date?</span>
+            <span class="icon">▼</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes, date changes are possible subject to availability and fare rules. A date change fee may apply along with any fare difference. We recommend checking the fare rules before booking for details on flexibility.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <h2 class="section-title">Get In Touch</h2>
+      <p class="section-subtitle">Have questions? We're here to help. Reach out to our support team anytime.</p>
+
+      <div class="contact-grid">
+        <div class="contact-info-cards">
+          <div class="contact-info-card animate-on-scroll fade-in">
+            <div class="icon-box">📞</div>
+            <div>
+              <h4>Customer Support</h4>
+              <p>+91 1800-123-4567 (Toll Free)</p>
+            </div>
+          </div>
+          <div class="contact-info-card animate-on-scroll fade-in" style="animation-delay: 0.1s;">
+            <div class="icon-box">📧</div>
+            <div>
+              <h4>Email Support</h4>
+              <p>support@Vimaan Airways.com</p>
+            </div>
+          </div>
+          <div class="contact-info-card animate-on-scroll fade-in" style="animation-delay: 0.2s;">
+            <div class="icon-box">📍</div>
+            <div>
+              <h4>Head Office</h4>
+              <p>Sky Tower, Connaught Place, New Delhi, India</p>
+            </div>
+          </div>
+          <div class="contact-info-card animate-on-scroll fade-in" style="animation-delay: 0.3s;">
+            <div class="icon-box">🕐</div>
+            <div>
+              <h4>Working Hours</h4>
+              <p>24/7 Customer Support Available</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form animate-on-scroll slide-up">
+          <h3>Send us a Message</h3>
+          <form id="contactForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="contactName">Name</label>
+                <input type="text" id="contactName" placeholder="Your full name" required>
+                <span class="error-msg"></span>
+              </div>
+              <div class="form-group">
+                <label for="contactEmail">Email</label>
+                <input type="email" id="contactEmail" placeholder="your@email.com" required>
+                <span class="error-msg"></span>
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 16px;">
+              <label for="contactSubject">Subject</label>
+              <input type="text" id="contactSubject" placeholder="How can we help?" required>
+              <span class="error-msg"></span>
+            </div>
+            <div class="form-group">
+              <label for="contactMessage">Message</label>
+              <textarea id="contactMessage" placeholder="Write your message here..." required></textarea>
+              <span class="error-msg"></span>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Send Message ✉️</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>✈️ Vimaan Airways</h3>
+          <p>Your trusted partner for premium flight bookings worldwide. Discover new destinations, grab exclusive deals, and fly with confidence.</p>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook">📘</a>
+            <a href="#" aria-label="Twitter">🐦</a>
+            <a href="#" aria-label="Instagram">📷</a>
+            <a href="#" aria-label="LinkedIn">💼</a>
+            <a href="#" aria-label="YouTube">▶️</a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h4>Popular Destinations</h4>
+          <ul>
+            <li><a href="pages/flights.html?to=DXB">Dubai</a></li>
+            <li><a href="pages/flights.html?to=SIN">Singapore</a></li>
+            <li><a href="pages/flights.html?to=LHR">London</a></li>
+            <li><a href="pages/flights.html?to=CDG">Paris</a></li>
+            <li><a href="pages/flights.html?to=NRT">Tokyo</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="pages/about.html">About Us</a></li>
+            <li><a href="pages/offers.html">Offers</a></li>
+            <li><a href="pages/my-bookings.html">My Bookings</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="pages/contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Customer Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Refund Policy</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Baggage Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Vimaan Airways. All rights reserved. Made with ❤️ for travelers worldwide.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+
+  <script src="script.js"></script>
+</body>
+</html>

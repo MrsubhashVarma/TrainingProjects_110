@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vimaan Airways — Promo Showcase</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    body {
+      background: radial-gradient(circle at top left, #1a1250 0%, #0a0e1a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .promo-card {
+      width: 100%;
+      max-width: 1100px;
+      background: rgba(17, 24, 45, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+
+    /* Background accent glows */
+    .promo-card::before {
+      content: '';
+      position: absolute;
+      top: -150px;
+      right: -150px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .promo-card::after {
+      content: '';
+      position: absolute;
+      bottom: -150px;
+      left: -150px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(244, 63, 94, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .promo-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .promo-header h1 {
+      font-size: 3.5rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+      color: #818cf8;
+    }
+
+    .promo-tagline {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .promo-desc {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    /* Technology Badges */
+    .tech-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .tech-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .tech-badge:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .tech-badge svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Services List */
+    .services-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      color: #fff;
+      border-bottom: 2px solid rgba(99, 102, 241, 0.2);
+      padding-bottom: 8px;
+    }
+
+    .services-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .service-item {
+      display: flex;
+      gap: 14px;
+      align-items: start;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      transition: all 0.3s ease;
+    }
+
+    .service-item:hover {
+      background: rgba(99, 102, 241, 0.06);
+      border-color: rgba(99, 102, 241, 0.2);
+      transform: translateX(6px);
+    }
+
+    .service-icon {
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+
+    .service-info h3 {
+      font-size: 1rem;
+      margin-bottom: 2px;
+      color: #fff;
+    }
+
+    .service-info p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.35;
+    }
+
+    /* Media query to stack elements nicely on smaller screens */
+    @media (max-width: 900px) {
+      .promo-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .promo-card {
+        padding: 24px;
+      }
+    }
+
+    .action-note {
+      margin-top: 30px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="promo-card">
+    <div class="promo-content">
+      <!-- Left Column: Branding, Tech, and Intro -->
+      <div>
+        <div class="promo-header">
+          <span style="font-size: 3.5rem; display: block; margin-bottom: 8px;">✈️</span>
+          <h1>Vimaan Airways</h1>
+          <div class="promo-tagline">Premium Flight Booking Platform</div>
+        </div>
+        
+        <p class="promo-desc">
+          A high-performance, single-page workflow application crafted entirely with native web standards. Showcasing a premium dark glassmorphism layout, fluid animations, and a seamless end-to-end flight booking journey.
+        </p>
+
+        <div class="tech-title">Technologies Used</div>
+        <div class="tech-stack">
+          <!-- HTML5 Badge -->
+          <div class="tech-badge">
+            <svg viewBox="0 0 512 512">
+              <path fill="#E34F26" d="M71,460 L37,44 L475,44 L441,460 L256,512 L71,460 Z"/>
+              <path fill="#EF652A" d="M256,472 L408,430 L435,78 L256,78 L256,472 Z"/>
+              <polygon fill="#EBEBEB" points="256,176 256,227 344,227 336,310 256,332 256,384 374,351 391,176"/>
+              <polygon fill="#EBEBEB" points="256,120 167,120 167,120 178,245 256,245 256,194 228,194 225,171 256,171"/>
+              <polygon fill="#FFFFFF" points="256,120 256,171 284,171 281,194 256,194 256,245 339,245 344,196 346,176 350,120"/>
+              <polygon fill="#EBEBEB" points="256,332 256,332 196,315 192,274 142,274 149,351 256,384"/>
+            </svg>
+            <span>HTML5</span>
+          </div>
+
+          <!-- CSS3 Badge -->
+          <div class="tech-badge">
+            <svg viewBox="0 0 512 512">
+              <path fill="#2062AF" d="M71,460 L37,44 L475,44 L441,460 L256,512 L71,460 Z"/>
+              <path fill="#3C9CD7" d="M256,472 L408,430 L435,78 L256,78 L256,472 Z"/>
+              <polygon fill="#EBEBEB" points="256,120 144,120 156,256 256,256"/>
+              <polygon fill="#FFFFFF" points="256,120 256,172 344,172 336,256 256,256"/>
+              <polygon fill="#EBEBEB" points="256,307 200,292 196,246 146,246 154,342 256,370"/>
+              <polygon fill="#FFFFFF" points="256,307 256,370 358,342 368,230 318,230 315,256 256,272"/>
+            </svg>
+            <span>CSS3</span>
+          </div>
+
+          <!-- JS Badge -->
+          <div class="tech-badge">
+            <svg viewBox="0 0 512 512">
+              <path fill="#F7DF1E" d="M0,0 L512,0 L512,512 L0,512 Z"/>
+              <path d="M291,321 C297,306 312,291 336,291 C362,291 377,304 377,338 L377,448 L428,448 L428,335 C428,272 390,243 339,243 C298,243 277,263 266,282 L264,282 L260,250 L213,250 L213,448 L264,448 L264,360 C264,334 278,321 291,321 Z M121,323 C127,314 139,307 155,307 C174,307 185,317 185,338 L185,395 C185,417 170,427 151,427 C133,427 122,416 122,397 L71,397 C71,433 99,468 152,468 C204,468 236,437 236,389 L236,339 C236,275 197,247 151,247 C109,247 81,269 71,304 L121,323 Z"/>
+            </svg>
+            <span>ES6 JS</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Services & Advantages -->
+      <div>
+        <div class="services-title">Services & Advantages</div>
+        <div class="services-list">
+          
+          <div class="service-item">
+            <div class="service-icon">🔍</div>
+            <div class="service-info">
+              <h3>Flight Search Engine</h3>
+              <p>One-way/round-trip searching, past-date blocking, and smart location validation.</p>
+            </div>
+          </div>
+
+          <div class="service-item">
+            <div class="service-icon">💺</div>
+            <div class="service-info">
+              <h3>Interactive Seat Map</h3>
+              <p>Visual airplane grid mapping window/aisle/middle layouts with live pricing rules.</p>
+            </div>
+          </div>
+
+          <div class="service-item">
+            <div class="service-icon">💳</div>
+            <div class="service-info">
+              <h3>Real-Time Fare Calculator</h3>
+              <p>Dynamic calculations on baggage, class upgrades, seats, and custom discount codes.</p>
+            </div>
+          </div>
+
+          <div class="service-item">
+            <div class="service-icon">⚡</div>
+            <div class="service-info">
+              <h3>Zero-Framework Speeds</h3>
+              <p>No bulky JS framework overhead. Lightweight DOM updates deliver instantaneous loading times.</p>
+            </div>
+          </div>
+
+          <div class="service-item">
+            <div class="service-icon">💾</div>
+            <div class="service-info">
+              <h3>LocalStorage Storage</h3>
+              <p>Theme settings, passenger history, favorites, and completed bookings are securely stored offline.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-note">
+    <button id="downloadBtn" class="btn btn-primary" style="margin: 20px auto; padding: 12px 24px; font-size: 1rem; border-radius: 12px; display: inline-flex; align-items: center; gap: 8px;">
+      💾 Download Showcase Card (PNG)
+    </button>
+    <p style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted);">
+      💡 Or simply take a screenshot of this page to use as a crisp, pixel-perfect LinkedIn showcase card!
+    </p>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+      // Temporarily hide the button during render
+      const btn = this;
+      btn.style.display = 'none';
+      
+      const card = document.querySelector('.promo-card');
+      
+      html2canvas(card, {
+        useCORS: true,
+        backgroundColor: null,
+        scale: 2 // Double resolution for ultra-crisp showcase image
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'vimaan-airways-showcase.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        
+        // Restore button visibility
+        btn.style.display = 'inline-flex';
+      }).catch(err => {
+        console.error('Error generating canvas:', err);
+        btn.style.display = 'inline-flex';
+      });
+    });
+  </script>
+</body>
+</html>

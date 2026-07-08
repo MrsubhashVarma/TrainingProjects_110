@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Complete your flight booking with passenger details, baggage selection, and fare summary.">
+  <title>Book Your Flight — Vimaan Airways</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo"><span class="logo-icon">✈️</span> Vimaan Airways</a>
+      <div class="nav-links" id="navLinks">
+        <a href="../index.html">Home</a>
+        <a href="flights.html">Flights</a>
+        <a href="../index.html#destinations">Destinations</a>
+        <a href="offers.html">Offers</a>
+        <a href="my-bookings.html">My Bookings</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+        <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-overlay"></div>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1>📝 Book Your Flight</h1>
+    <p>Complete your booking with passenger details and fare summary</p>
+  </div>
+
+  <!-- Booking Content -->
+  <section class="booking-page">
+    <div class="container">
+      <div class="booking-layout">
+        <!-- Main Content -->
+        <div class="booking-main">
+
+          <!-- Flight Details -->
+          <div class="booking-card animate-on-scroll fade-in">
+            <h3>🎫 Flight Details</h3>
+            <div id="flightDetailsContent">
+              <p style="color: var(--text-muted);">Loading flight details...</p>
+            </div>
+          </div>
+
+          <!-- Passenger Details -->
+          <div class="booking-card animate-on-scroll slide-up">
+            <h3>📝 Passenger Details</h3>
+            <form id="bookingForm" class="passenger-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fullName">Full Name *</label>
+                  <input type="text" id="fullName" placeholder="Enter full name" required>
+                  <span class="error-msg"></span>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email *</label>
+                  <input type="email" id="email" placeholder="your@email.com" required>
+                  <span class="error-msg"></span>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="phone">Phone Number *</label>
+                  <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX" required>
+                  <span class="error-msg"></span>
+                </div>
+                <div class="form-group">
+                  <label for="passport">Passport Number *</label>
+                  <input type="text" id="passport" placeholder="e.g., A1234567" required>
+                  <span class="error-msg"></span>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="nationality">Nationality *</label>
+                  <select id="nationality" required>
+                    <option value="">Select Nationality</option>
+                    <option value="Indian">Indian</option>
+                    <option value="American">American</option>
+                    <option value="British">British</option>
+                    <option value="Australian">Australian</option>
+                    <option value="Canadian">Canadian</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="Singaporean">Singaporean</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <span class="error-msg"></span>
+                </div>
+                <div class="form-group">
+                  <label for="dob">Date of Birth *</label>
+                  <input type="date" id="dob" required>
+                  <span class="error-msg"></span>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="gender">Gender *</label>
+                  <select id="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <span class="error-msg"></span>
+                </div>
+                <div class="form-group">
+                  <label for="address">Address</label>
+                  <input type="text" id="address" placeholder="Enter your address">
+                  <span class="error-msg"></span>
+                </div>
+              </div>
+
+              <!-- Baggage Selection -->
+              <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
+                <h4 style="margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">🛄 Extra Baggage</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                  <label class="checkbox-label" style="padding: 12px 20px; background: var(--bg-secondary); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="radio" name="extraBaggage" value="0" checked> No Extra (Included: 25kg)
+                  </label>
+                  <label class="checkbox-label" style="padding: 12px 20px; background: var(--bg-secondary); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="radio" name="extraBaggage" value="1500"> +10kg (₹1,500)
+                  </label>
+                  <label class="checkbox-label" style="padding: 12px 20px; background: var(--bg-secondary); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="radio" name="extraBaggage" value="2500"> +20kg (₹2,500)
+                  </label>
+                  <label class="checkbox-label" style="padding: 12px 20px; background: var(--bg-secondary); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="radio" name="extraBaggage" value="3500"> +30kg (₹3,500)
+                  </label>
+                </div>
+              </div>
+
+              <!-- Seat Selection Link -->
+              <div style="margin-top: 24px; padding: 20px; background: var(--accent-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+                <div>
+                  <h4 style="margin-bottom: 4px;">💺 Select Your Seat</h4>
+                  <p style="font-size: 0.9rem; color: var(--text-secondary);">Choose your preferred seat on the airplane</p>
+                </div>
+                <a href="seat-selection.html" class="btn btn-secondary btn-sm">Choose Seat →</a>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg btn-block" style="margin-top: 32px;">
+                ✅ Confirm Booking
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Fare Summary Sidebar -->
+        <aside>
+          <div class="fare-summary animate-on-scroll slide-up">
+            <h3>💳 Fare Summary</h3>
+            <div class="fare-row">
+              <span>Base Fare</span>
+              <span id="baseFare">₹0</span>
+            </div>
+            <div class="fare-row">
+              <span>Taxes & Fees</span>
+              <span id="taxes">₹0</span>
+            </div>
+            <div class="fare-row">
+              <span>Convenience Fee</span>
+              <span id="convenienceFee">₹0</span>
+            </div>
+            <div class="fare-row">
+              <span>Baggage Charges</span>
+              <span id="baggageCharges">₹0</span>
+            </div>
+            <div class="fare-row">
+              <span>Seat Charges</span>
+              <span id="seatCharges">₹0</span>
+            </div>
+            <div class="fare-row discount">
+              <span>Discount</span>
+              <span id="discount">-₹0</span>
+            </div>
+            <hr class="fare-divider">
+            <div class="fare-total">
+              <span>Total Amount</span>
+              <span class="amount" id="totalAmount">₹0</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>✈️ Vimaan Airways</h3>
+          <p>Your trusted partner for premium flight bookings worldwide.</p>
+          <div class="social-links"><a href="#">📘</a><a href="#">🐦</a><a href="#">📷</a><a href="#">💼</a></div>
+        </div>
+        <div class="footer-column"><h4>Quick Links</h4><ul><li><a href="about.html">About</a></li><li><a href="offers.html">Offers</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="footer-column"><h4>Support</h4><ul><li><a href="#">Help Center</a></li><li><a href="#">Refund Policy</a></li><li><a href="#">Terms</a></li></ul></div>
+        <div class="footer-column"><h4>Destinations</h4><ul><li><a href="flights.html?to=DXB">Dubai</a></li><li><a href="flights.html?to=LHR">London</a></li><li><a href="flights.html?to=SIN">Singapore</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p>© 2026 Vimaan Airways. All rights reserved.</p></div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="Back to top">↑</button>
+  <script src="../script.js"></script>
+</body>
+</html>

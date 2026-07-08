@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Book Management System</title>
+    <!-- Modern Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background elements -->
+    <div class="blob blob-purple"></div>
+    <div class="blob blob-cyan"></div>
+    
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <i class="fa-solid fa-book-bookmark logo-icon"></i>
+                <div class="logo-text">
+                    <h1>Antigravity Library</h1>
+                    <p>Digital Book Management Dashboard</p>
+                </div>
+            </div>
+            <div class="status-badge" id="db-status-badge">
+                <span class="status-dot pulse"></span>
+                <span id="db-status-text">Connecting...</span>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Content -->
+        <main class="dashboard-grid">
+            <!-- Left Panel: Form Card -->
+            <section class="panel-card form-panel">
+                <div class="card-header">
+                    <h2 id="form-title-text"><i class="fa-solid fa-plus-circle header-icon"></i> Add New Book</h2>
+                    <p id="form-desc-text">Fill in the book details to expand the catalog</p>
+                </div>
+                
+                <form id="book-form" novalidate>
+                    <!-- Book ID -->
+                    <div class="form-group">
+                        <label for="book_id">Book ID <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-hashtag input-icon"></i>
+                            <input type="number" id="book_id" placeholder="e.g. 106" min="1" required>
+                        </div>
+                        <span class="error-msg" id="error-book_id"></span>
+                    </div>
+
+                    <!-- Title -->
+                    <div class="form-group">
+                        <label for="title">Book Title <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-book input-icon"></i>
+                            <input type="text" id="title" placeholder="e.g. Introduction to Algorithms" required>
+                        </div>
+                        <span class="error-msg" id="error-title"></span>
+                    </div>
+
+                    <!-- Author -->
+                    <div class="form-group">
+                        <label for="author">Author <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-user-pen input-icon"></i>
+                            <input type="text" id="author" placeholder="e.g. Thomas H. Cormen" required>
+                        </div>
+                        <span class="error-msg" id="error-author"></span>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="form-group">
+                        <label for="category">Category <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-tags input-icon"></i>
+                            <input type="text" id="category" placeholder="e.g. Computer Science" list="categories-list" required>
+                            <datalist id="categories-list">
+                                <option value="Programming">
+                                <option value="Web Development">
+                                <option value="Database">
+                                <option value="Frontend">
+                                <option value="Algorithms">
+                                <option value="Artificial Intelligence">
+                                </datalist>
+                        </div>
+                        <span class="error-msg" id="error-category"></span>
+                    </div>
+
+                    <!-- Price & Quantity (2 columns) -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="price">Price (₹) <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-indian-rupee-sign input-icon"></i>
+                                <input type="number" id="price" placeholder="799" min="0" step="0.01" required>
+                            </div>
+                            <span class="error-msg" id="error-price"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantity">Quantity <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-cubes input-icon"></i>
+                                <input type="number" id="quantity" placeholder="20" min="0" required>
+                            </div>
+                            <span class="error-msg" id="error-quantity"></span>
+                        </div>
+                    </div>
+
+                    <!-- Publisher -->
+                    <div class="form-group">
+                        <label for="publisher">Publisher <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-building-columns input-icon"></i>
+                            <input type="text" id="publisher" placeholder="e.g. MIT Press" required>
+                        </div>
+                        <span class="error-msg" id="error-publisher"></span>
+                    </div>
+
+                    <!-- Form Action Buttons -->
+                    <div class="form-actions">
+                        <button type="submit" id="submit-btn" class="btn btn-primary">
+                            <span id="btn-text">Add Book</span>
+                            <i class="fa-solid fa-plus btn-icon"></i>
+                        </button>
+                        <button type="button" id="cancel-btn" class="btn btn-secondary hidden">
+                            <span>Cancel</span>
+                            <i class="fa-solid fa-xmark btn-icon"></i>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Right Panel: Grid / List Panel -->
+            <section class="panel-card list-panel">
+                <div class="list-header">
+                    <div class="header-titles">
+                        <h2><i class="fa-solid fa-list-ul header-icon"></i> Book Catalog</h2>
+                        <p>Browse, manage and search through books in the inventory</p>
+                    </div>
+                    <!-- Quick Search / Filter -->
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="search-input" placeholder="Search by title, author, category...">
+                    </div>
+                </div>
+
+                <!-- Table Wrapper -->
+                <div class="table-container">
+                    <table class="books-table" id="books-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 80px;">Book ID</th>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Category</th>
+                                <th style="width: 100px;">Price</th>
+                                <th style="width: 90px;">Qty</th>
+                                <th>Publisher</th>
+                                <th style="width: 150px; text-align: center;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="books-list-body">
+                            <!-- Populated dynamically via JS -->
+                            <tr class="placeholder-row">
+                                <td colspan="8">
+                                    <div class="loading-state">
+                                        <div class="spinner"></div>
+                                        <p>Loading books from database...</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-footer">
+                    <span id="total-count">Total: 0 books</span>
+                    <button id="refresh-btn" class="btn btn-text">
+                        <i class="fa-solid fa-arrows-rotate"></i> Refresh Catalog
+                    </button>
+                </div>
+            </section>
+        </main>
+        
+        <!-- App Footer -->
+        <footer class="app-footer-bar">
+            <p>&copy; 2026 Antigravity Library Book Management. Built with Django, PyMongo & MongoDB Atlas.</p>
+        </footer>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

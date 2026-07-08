@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact Vimaan Airways customer support. Get help with bookings, refunds, and travel queries.">
+  <title>Contact Us — Vimaan Airways</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo"><span class="logo-icon">✈️</span> Vimaan Airways</a>
+      <div class="nav-links" id="navLinks">
+        <a href="../index.html">Home</a>
+        <a href="flights.html">Flights</a>
+        <a href="../index.html#destinations">Destinations</a>
+        <a href="offers.html">Offers</a>
+        <a href="my-bookings.html">My Bookings</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" class="active">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+        <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-overlay"></div>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1>📞 Contact Us</h1>
+    <p>We're here to help. Reach out anytime!</p>
+  </div>
+
+  <!-- Contact Content -->
+  <section class="contact-section" style="padding-top: 40px;">
+    <div class="container">
+      <div class="contact-grid">
+        <!-- Contact Info -->
+        <div class="contact-info-cards">
+          <div class="contact-info-card animate-on-scroll fade-in">
+            <div class="icon-box">📞</div>
+            <div>
+              <h4>Customer Support</h4>
+              <p>+91 1800-123-4567 (Toll Free)</p>
+              <p style="font-size: 0.8rem; color: var(--text-muted);">Available 24/7</p>
+            </div>
+          </div>
+
+          <div class="contact-info-card animate-on-scroll fade-in" style="animation-delay: 0.1s;">
+            <div class="icon-box">📧</div>
+            <div>
+              <h4>Email Support</h4>
+              <p>support@Vimaan Airways.com</p>
+              <p style="font-size: 0.8rem; color: var(--text-muted);">Response within 2 hours</p>
+            </div>
+          </div>
+
+          <div class="contact-info-card animate-on-scroll fade-in" style="animation-delay: 0.2s;">
+            <div class="icon-box">📍</div>
+            <div>
+              <h4>Head Office</h4>
+              <p>Sky Tower, 15th Floor</p>
+              <p style="font-size: 0.8rem; color: var(--text-muted);">Connaught Place, New Delhi 110001</p>
+            </div>
+          </div>
+
+          <div class="contact-info-card animate-on-scroll fade-in" style="animation-delay: 0.3s;">
+            <div class="icon-box">🕐</div>
+            <div>
+              <h4>Working Hours</h4>
+              <p>24/7 Customer Support</p>
+              <p style="font-size: 0.8rem; color: var(--text-muted);">Office: Mon-Fri 9AM-6PM IST</p>
+            </div>
+          </div>
+
+          <div class="contact-info-card animate-on-scroll fade-in" style="animation-delay: 0.4s;">
+            <div class="icon-box">💬</div>
+            <div>
+              <h4>Live Chat</h4>
+              <p>Chat with our support team</p>
+              <p style="font-size: 0.8rem; color: var(--text-muted);">Available on website & app</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form animate-on-scroll slide-up">
+          <h3>Send us a Message</h3>
+          <form id="contactForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="contactName">Full Name *</label>
+                <input type="text" id="contactName" placeholder="Your full name" required>
+                <span class="error-msg"></span>
+              </div>
+              <div class="form-group">
+                <label for="contactEmail">Email Address *</label>
+                <input type="email" id="contactEmail" placeholder="your@email.com" required>
+                <span class="error-msg"></span>
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 16px;">
+              <label for="contactSubject">Subject *</label>
+              <select id="contactSubject" required>
+                <option value="">Select a topic</option>
+                <option value="booking">Booking Inquiry</option>
+                <option value="refund">Refund Request</option>
+                <option value="complaint">Complaint</option>
+                <option value="feedback">Feedback</option>
+                <option value="partnership">Partnership</option>
+                <option value="other">Other</option>
+              </select>
+              <span class="error-msg"></span>
+            </div>
+            <div class="form-group">
+              <label for="contactMessage">Message *</label>
+              <textarea id="contactMessage" placeholder="Describe your query in detail..." required></textarea>
+              <span class="error-msg"></span>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block btn-lg">Send Message ✉️</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Section -->
+  <section style="padding: 0 0 80px;">
+    <div class="container">
+      <div class="animate-on-scroll zoom-in" style="border-radius: var(--radius-lg); overflow: hidden; height: 300px; background: var(--bg-card); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;">
+        <div style="text-align: center; color: var(--text-muted);">
+          <div style="font-size: 4rem; margin-bottom: 12px;">🗺️</div>
+          <h3 style="margin-bottom: 4px;">Vimaan Airways Head Office</h3>
+          <p>Sky Tower, Connaught Place, New Delhi, India</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>✈️ Vimaan Airways</h3>
+          <p>Your trusted partner for premium flight bookings worldwide.</p>
+          <div class="social-links"><a href="#">📘</a><a href="#">🐦</a><a href="#">📷</a><a href="#">💼</a></div>
+        </div>
+        <div class="footer-column"><h4>Quick Links</h4><ul><li><a href="about.html">About</a></li><li><a href="offers.html">Offers</a></li><li><a href="my-bookings.html">My Bookings</a></li></ul></div>
+        <div class="footer-column"><h4>Support</h4><ul><li><a href="#">Help Center</a></li><li><a href="#">Refund Policy</a></li><li><a href="#">Terms</a></li></ul></div>
+        <div class="footer-column"><h4>Destinations</h4><ul><li><a href="flights.html?to=DXB">Dubai</a></li><li><a href="flights.html?to=LHR">London</a></li><li><a href="flights.html?to=SIN">Singapore</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p>© 2026 Vimaan Airways. All rights reserved.</p></div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="Back to top">↑</button>
+  <script src="../script.js"></script>
+</body>
+</html>
