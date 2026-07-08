@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Choose your preferred seat on the airplane with our interactive seat map.">
+  <title>Seat Selection — Vimaan Airways</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo"><span class="logo-icon">✈️</span> Vimaan Airways</a>
+      <div class="nav-links" id="navLinks">
+        <a href="../index.html">Home</a>
+        <a href="flights.html">Flights</a>
+        <a href="../index.html#destinations">Destinations</a>
+        <a href="offers.html">Offers</a>
+        <a href="my-bookings.html">My Bookings</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+        <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-overlay"></div>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1>💺 Seat Selection</h1>
+    <p>Choose your preferred seat for a comfortable journey</p>
+  </div>
+
+  <!-- Seat Selection Content -->
+  <section class="seat-selection-page">
+    <div class="container">
+      <div class="seat-layout">
+        <!-- Airplane Seat Map -->
+        <div class="airplane-container animate-on-scroll fade-in">
+          <div class="airplane-body">
+            <div class="airplane-nose">✈️ FRONT</div>
+            <div id="seatMap"></div>
+
+            <div class="seat-legend">
+              <div class="legend-item">
+                <div class="legend-box available"></div>
+                <span>Available</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-box reserved"></div>
+                <span>Reserved</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-box selected"></div>
+                <span>Selected</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-box exit"></div>
+                <span>Exit Row</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Seat Info Panel -->
+        <div class="seat-info-panel">
+          <div class="seat-info-card animate-on-scroll slide-up">
+            <h3>🪑 Selected Seat</h3>
+            <div class="selected-seat-display">
+              <div class="seat-number">--</div>
+              <div class="seat-type">No seat selected</div>
+            </div>
+            <div class="fare-row">
+              <span>Seat Charge</span>
+              <span id="seatPrice">₹0</span>
+            </div>
+            <hr class="fare-divider">
+            <div style="margin-top: 16px;">
+              <h4 style="font-size: 0.95rem; margin-bottom: 12px;">Seat Types & Pricing</h4>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+                  <span style="color: var(--text-secondary);">🪟 Window (A, F)</span>
+                  <span style="font-weight: 600;">₹500</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+                  <span style="color: var(--text-secondary);">🚶 Aisle (C, D)</span>
+                  <span style="font-weight: 600;">₹300</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+                  <span style="color: var(--text-secondary);">👤 Middle (B, E)</span>
+                  <span style="font-weight: 600;">Free</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+                  <span style="color: var(--text-secondary);">🚪 Exit Row Surcharge</span>
+                  <span style="font-weight: 600;">+₹800</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="seat-info-card animate-on-scroll slide-up" style="animation-delay: 0.1s;">
+            <h3>ℹ️ Seat Info</h3>
+            <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.8;">
+              <p>• <strong>Window seats</strong> (A & F) — Enjoy the view!</p>
+              <p>• <strong>Middle seats</strong> (B & E) — Budget-friendly option</p>
+              <p>• <strong>Aisle seats</strong> (C & D) — Easy access</p>
+              <p>• <strong>Exit row seats</strong> — Extra legroom, additional charge</p>
+              <p style="margin-top: 12px; color: var(--text-muted); font-size: 0.85rem;">Click on an available seat to select it. Click again or choose another to change.</p>
+            </div>
+          </div>
+
+          <a href="booking.html" class="btn btn-primary btn-block" style="margin-top: 16px;">← Back to Booking</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>✈️ Vimaan Airways</h3>
+          <p>Your trusted partner for premium flight bookings worldwide.</p>
+          <div class="social-links"><a href="#">📘</a><a href="#">🐦</a><a href="#">📷</a><a href="#">💼</a></div>
+        </div>
+        <div class="footer-column"><h4>Quick Links</h4><ul><li><a href="about.html">About</a></li><li><a href="offers.html">Offers</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="footer-column"><h4>Support</h4><ul><li><a href="#">Help Center</a></li><li><a href="#">Terms</a></li><li><a href="#">Privacy</a></li></ul></div>
+        <div class="footer-column"><h4>Destinations</h4><ul><li><a href="flights.html?to=DXB">Dubai</a></li><li><a href="flights.html?to=LHR">London</a></li><li><a href="flights.html?to=SIN">Singapore</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p>© 2026 Vimaan Airways. All rights reserved.</p></div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="Back to top">↑</button>
+  <script src="../script.js"></script>
+</body>
+</html>

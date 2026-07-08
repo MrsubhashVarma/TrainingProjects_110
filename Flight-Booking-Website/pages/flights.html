@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Search and compare flights from top airlines. Find the best deals on domestic and international flights.">
+  <title>Available Flights — Vimaan Airways</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo"><span class="logo-icon">✈️</span> Vimaan Airways</a>
+      <div class="nav-links" id="navLinks">
+        <a href="../index.html">Home</a>
+        <a href="flights.html" class="active">Flights</a>
+        <a href="../index.html#destinations">Destinations</a>
+        <a href="offers.html">Offers</a>
+        <a href="my-bookings.html">My Bookings</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+        <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-overlay"></div>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1>🛫 Available Flights</h1>
+    <p>Find and compare the best flights for your journey</p>
+  </div>
+
+  <!-- Flights Content -->
+  <section class="flights-page">
+    <div class="container">
+      <div class="flights-layout">
+        <!-- Filter Sidebar -->
+        <aside class="filter-sidebar">
+          <div class="filter-card">
+            <h3>🔍 Filters</h3>
+
+            <div class="filter-group">
+              <label>Max Price</label>
+              <input type="range" class="price-range" id="priceRange" min="5000" max="50000" value="50000">
+              <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">
+                <span>₹5,000</span>
+                <span id="priceValue">₹50,000</span>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label>Airlines</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" class="airline-filter" value="Vimaan Airways Air"> Vimaan Airways Air
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" class="airline-filter" value="IndiaWings"> IndiaWings
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" class="airline-filter" value="AeroConnect"> AeroConnect
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" class="airline-filter" value="FlyEast"> FlyEast
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" class="airline-filter" value="PacificJet"> PacificJet
+                </label>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label>Stops</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" class="stops-filter" value="0"> Non-stop
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" class="stops-filter" value="1"> 1 Stop
+                </label>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Flight Results -->
+        <div class="flights-results">
+          <div class="sort-bar">
+            <div id="resultsCount" class="results-count"><strong>0</strong> flights found</div>
+            <div class="sort-options">
+              <button class="sort-btn active" data-sort="price">Price</button>
+              <button class="sort-btn" data-sort="duration">Duration</button>
+              <button class="sort-btn" data-sort="departure">Departure</button>
+            </div>
+          </div>
+          <div id="flightsList"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>✈️ Vimaan Airways</h3>
+          <p>Your trusted partner for premium flight bookings worldwide.</p>
+          <div class="social-links">
+            <a href="#">📘</a><a href="#">🐦</a><a href="#">📷</a><a href="#">💼</a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h4>Popular Destinations</h4>
+          <ul>
+            <li><a href="flights.html?to=DXB">Dubai</a></li>
+            <li><a href="flights.html?to=SIN">Singapore</a></li>
+            <li><a href="flights.html?to=LHR">London</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="offers.html">Offers</a></li>
+            <li><a href="my-bookings.html">My Bookings</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Vimaan Airways. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="Back to top">↑</button>
+  <script src="../script.js"></script>
+</body>
+</html>
