@@ -18,3 +18,7 @@ env/
 # OS
 Thumbs.db
 .DS_Store
+
+# To-Do List Application specific ignores
+tasks_db.json
+.venv/
