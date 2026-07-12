@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="layout-sidebar">
+    <aside>
+        <div class="glass-card sidebar-nav">
+            <h3 style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Admin Panel</h3>
+            <a href="{% url 'admin_dashboard' %}" class="sidebar-link"><i class="ph ph-squares-four"></i> Dashboard</a>
+            <a href="{% url 'admin_medicines' %}" class="sidebar-link"><i class="ph ph-pill"></i> Medicines</a>
+            <a href="{% url 'admin_categories' %}" class="sidebar-link"><i class="ph ph-list-dashes"></i> Categories</a>
+            <a href="{% url 'admin_orders' %}" class="sidebar-link active"><i class="ph ph-receipt"></i> Orders</a>
+            <a href="{% url 'admin_users' %}" class="sidebar-link"><i class="ph ph-users"></i> Users</a>
+        </div>
+    </aside>
+
+    <div>
+        <h1 style="margin-bottom: 2rem;">Order Management</h1>
+
+        <div class="glass-card" style="padding: 0; overflow-x: auto;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th style="width: 150px;">Update Status</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <tr><td colspan="6" style="text-align: center; padding: 2rem;"><i class="ph ph-spinner ph-spin"></i> Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    if (!VitalisAPI.isAdmin()) window.location.href = '/';
+    else loadOrders();
+});
+
+async function loadOrders() {
+    const res = await VitalisAPI.request('/orders');
+    const tbody = document.getElementById('table-body');
+    
+    if (res.ok && res.data.data) {
+        tbody.innerHTML = res.data.data.map(o => {
+            const date = new Date(o.createdAt).toLocaleString();
+            
+            let statusColor = 'var(--text-secondary)';
+            if (o.status === 'Pending') statusColor = 'var(--warning)';
+            if (o.status === 'Confirmed' || o.status === 'Dispatched') statusColor = 'var(--accent-primary)';
+            if (o.status === 'Delivered') statusColor = 'var(--success)';
+            if (o.status === 'Cancelled') statusColor = 'var(--danger)';
+
+            return `
+            <tr>
+                <td style="font-family: monospace; font-weight: 600;">#${o._id.substring(18)}</td>
+                <td>
+                    <div style="font-weight: 600;">${o.userName}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">${o.userEmail}</div>
+                </td>
+                <td style="font-size: 0.9rem;">${date}</td>
+                <td style="font-weight: 600;">₹${o.totalAmount}</td>
+                <td style="color: ${statusColor}; font-weight: 600;">${o.status}</td>
+                <td>
+                    <select onchange="updateStatus('${o._id}', this.value)" class="form-control" style="padding: 0.25rem 0.5rem; font-size: 0.8rem; border-color: var(--glass-border); width: 100%;">
+                        <option value="Pending" ${o.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                        <option value="Confirmed" ${o.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
+                        <option value="Dispatched" ${o.status === 'Dispatched' ? 'selected' : ''}>Dispatched</option>
+                        <option value="Delivered" ${o.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                        <option value="Cancelled" ${o.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                    </select>
+                </td>
+            </tr>
+            `;
+        }).join('');
+    } else {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Failed to load orders</td></tr>`;
+    }
+}
+
+async function updateStatus(id, newStatus) {
+    const res = await VitalisAPI.request(`/orders/${id}`, 'PUT', { status: newStatus });
+    if (res.ok && res.data.success) {
+        VitalisAPI.showToast('Order status updated', 'success');
+        loadOrders();
+    } else {
+        VitalisAPI.showToast(res.data.message || 'Update failed', 'error');
+        loadOrders(); // Reload to reset select dropdown
+    }
+}
+</script>
+{% endblock %}

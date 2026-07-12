@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
+    <div>
+        <h1 style="margin-bottom: 0.5rem;">Our Medicines</h1>
+        <p style="color: var(--text-secondary);">Browse our complete catalog of authentic medicines.</p>
+    </div>
+</div>
+
+<div class="layout-sidebar">
+    <!-- Sidebar Filters -->
+    <aside>
+        <div class="glass-card" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+            <h3 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                <i class="ph ph-funnel"></i> Filters
+            </h3>
+            
+            <div class="form-group">
+                <label class="form-label">Search</label>
+                <div style="position: relative;">
+                    <i class="ph ph-magnifying-glass" style="position: absolute; left: 10px; top: 12px; color: var(--text-muted);"></i>
+                    <input type="text" id="search-input" class="form-control" placeholder="Search medicines..." style="padding-left: 35px;">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Category</label>
+                <select id="category-filter" class="form-control">
+                    <option value="">All Categories</option>
+                    <!-- Injected by JS -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Sort By</label>
+                <select id="sort-filter" class="form-control">
+                    <option value="name_asc">Name (A-Z)</option>
+                    <option value="name_desc">Name (Z-A)</option>
+                    <option value="price_asc">Price (Low to High)</option>
+                    <option value="price_desc">Price (High to Low)</option>
+                </select>
+            </div>
+
+            <button onclick="applyFilters()" class="btn btn-primary" style="width: 100%;">Apply Filters</button>
+            <button onclick="resetFilters()" class="btn btn-secondary" style="width: 100%; margin-top: 0.5rem;">Reset</button>
+        </div>
+    </aside>
+
+    <!-- Main Grid -->
+    <div>
+        <div id="medicines-grid" class="grid-3">
+            <div class="glass-card" style="grid-column: 1 / -1; text-align: center; opacity: 0.5;">
+                <i class="ph ph-spinner ph-spin" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                <p>Loading medicines...</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    // Load categories for filter
+    const catRes = await VitalisAPI.request('/categories');
+    if (catRes.ok && catRes.data.data) {
+        const select = document.getElementById('category-filter');
+        catRes.data.data.forEach(c => {
+            select.innerHTML += `<option value="${c.categoryName}">${c.categoryName}</option>`;
+        });
+    }
+
+    // Check URL params for initial category
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialCategory = urlParams.get('category');
+    if (initialCategory) {
+        document.getElementById('category-filter').value = initialCategory;
+    }
+
+    loadMedicines();
+});
+
+async function loadMedicines(searchQuery = null) {
+    const grid = document.getElementById('medicines-grid');
+    grid.innerHTML = '<div class="glass-card" style="grid-column: 1 / -1; text-align: center; opacity: 0.5;"><i class="ph ph-spinner ph-spin" style="font-size: 2rem; margin-bottom: 1rem;"></i><p>Loading medicines...</p></div>';
+
+    let endpoint = '/medicines';
+    
+    // If search is active
+    if (searchQuery) {
+        endpoint = `/medicines/search?q=${encodeURIComponent(searchQuery)}`;
+    } else {
+        // Build query params
+        const params = new URLSearchParams();
+        const category = document.getElementById('category-filter').value;
+        const sortVal = document.getElementById('sort-filter').value;
+        
+        if (category) params.append('category', category);
+        
+        if (sortVal === 'name_asc') { params.append('sortBy', 'medicineName'); params.append('order', 'asc'); }
+        else if (sortVal === 'name_desc') { params.append('sortBy', 'medicineName'); params.append('order', 'desc'); }
+        else if (sortVal === 'price_asc') { params.append('sortBy', 'price'); params.append('order', 'asc'); }
+        else if (sortVal === 'price_desc') { params.append('sortBy', 'price'); params.append('order', 'desc'); }
+
+        if (params.toString()) {
+            endpoint += `?${params.toString()}`;
+        }
+    }
+
+    const res = await VitalisAPI.request(endpoint);
+    
+    if (res.ok && res.data.data) {
+        const meds = res.data.data;
+        if (meds.length === 0) {
+            grid.innerHTML = '<div class="glass-card" style="grid-column: 1 / -1; text-align: center; color: var(--text-secondary);"><i class="ph ph-magnifying-glass" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i><p>No medicines found matching your criteria.</p></div>';
+            return;
+        }
+
+        grid.innerHTML = meds.map(m => `
+            <div class="glass-card medicine-card">
+                <div class="img-placeholder">
+                    ${m.image ? `<img src="${m.image}" alt="${m.medicineName}" style="width:100%; height:100%; object-fit:contain; border-radius:8px;">` : '<i class="ph ph-pill"></i>'}
+                </div>
+                <h3>${m.medicineName} <span class="badge badge-primary" style="font-size: 0.6rem; float: right;">${m.category}</span></h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">By ${m.brand}</p>
+                <div class="price">₹${m.price}</div>
+                <div style="font-size: 0.8rem; color: ${m.stock > 10 ? 'var(--success)' : 'var(--danger)'}; margin-bottom: 1rem;">
+                    ${m.stock > 0 ? (m.stock > 10 ? 'In Stock' : `Only ${m.stock} left`) : 'Out of Stock'}
+                </div>
+                <div class="footer-actions">
+                    <a href="/medicines/${m._id}/" class="btn btn-secondary" style="flex:1;">Details</a>
+                    <button onclick="addToCart('${m._id}', ${m.stock})" class="btn btn-primary" ${m.stock === 0 ? 'disabled' : ''}>
+                        <i class="ph ph-shopping-cart-simple"></i>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    } else {
+        grid.innerHTML = '<div class="glass-card" style="grid-column: 1 / -1; text-align: center; color: var(--danger);"><p>Failed to load medicines.</p></div>';
+    }
+}
+
+function applyFilters() {
+    const search = document.getElementById('search-input').value.trim();
+    loadMedicines(search || null);
+}
+
+function resetFilters() {
+    document.getElementById('search-input').value = '';
+    document.getElementById('category-filter').value = '';
+    document.getElementById('sort-filter').value = 'name_asc';
+    loadMedicines();
+}
+
+async function addToCart(medicineId, stock) {
+    if (stock <= 0) return;
+    if (!VitalisAPI.getUser()) {
+        VitalisAPI.showToast('Please login to add items to cart', 'error');
+        setTimeout(() => window.location.href = '/login/', 1500);
+        return;
+    }
+    const res = await VitalisAPI.request('/cart/add', 'POST', { medicineId: medicineId, quantity: 1 });
+    if (res.ok && res.data.success) {
+        VitalisAPI.showToast('Added to cart successfully!', 'success');
+    } else {
+        VitalisAPI.showToast(res.data.message || 'Failed to add to cart', 'error');
+    }
+}
+</script>
+{% endblock %}

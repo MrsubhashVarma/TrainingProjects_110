@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div style="max-width: 450px; margin: 4rem auto;">
+    <div class="glass-card">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <i class="ph ph-user-circle" style="font-size: 3rem; color: var(--accent-primary);"></i>
+            <h2 style="margin-top: 0.5rem;">Welcome Back</h2>
+            <p style="color: var(--text-secondary);">Log in to manage your pharmacy orders</p>
+        </div>
+
+        <form id="login-form">
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" id="email" class="form-control" placeholder="john@example.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                <i class="ph ph-sign-in"></i> Log In
+            </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 1.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+            Don't have an account? <a href="{% url 'register' %}" style="font-weight: 600;">Sign up here</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Logging in...';
+    btn.disabled = true;
+
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    const res = await VitalisAPI.request('/login', 'POST', { email, password });
+    
+    if (res.ok && res.data.success) {
+        VitalisAPI.setAuth(res.data.data.token, res.data.data.user);
+        VitalisAPI.showToast('Login successful!', 'success');
+        
+        setTimeout(() => {
+            if (res.data.data.user.role === 'admin') {
+                window.location.href = '/admin-dashboard/';
+            } else {
+                window.location.href = '/';
+            }
+        }, 1000);
+    } else {
+        VitalisAPI.showToast(res.data.message || 'Invalid credentials', 'error');
+        btn.innerHTML = '<i class="ph ph-sign-in"></i> Log In';
+        btn.disabled = false;
+    }
+});
+</script>
+{% endblock %}

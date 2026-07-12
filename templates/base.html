@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Vitalis Pharmacy{% endblock %}</title>
+    
+    <!-- Google Fonts: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons (Modern Icons) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="theme-dark">
+    
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar glass-effect">
+        <div class="nav-container">
+            <a href="{% url 'index' %}" class="nav-logo">
+                <i class="ph ph-pill"></i>
+                <span>Vitalis</span>
+            </a>
+            
+            <div class="nav-links">
+                <a href="{% url 'index' %}" class="nav-link">Home</a>
+                <a href="{% url 'medicines' %}" class="nav-link">Medicines</a>
+                
+                <!-- Dynamic Auth Links -->
+                <div id="nav-auth-section" style="display: flex; gap: 1rem; align-items: center;">
+                    <!-- Injected by JS -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h2>Vitalis Pharmacy</h2>
+                <p>Premium healthcare delivered to your doorstep.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core JavaScript -->
+    <script src="{% static 'js/api.js' %}"></script>
+    <script>
+        // Global initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            VitalisAPI.updateNavigation();
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

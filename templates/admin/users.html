@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="layout-sidebar">
+    <aside>
+        <div class="glass-card sidebar-nav">
+            <h3 style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Admin Panel</h3>
+            <a href="{% url 'admin_dashboard' %}" class="sidebar-link"><i class="ph ph-squares-four"></i> Dashboard</a>
+            <a href="{% url 'admin_medicines' %}" class="sidebar-link"><i class="ph ph-pill"></i> Medicines</a>
+            <a href="{% url 'admin_categories' %}" class="sidebar-link"><i class="ph ph-list-dashes"></i> Categories</a>
+            <a href="{% url 'admin_orders' %}" class="sidebar-link"><i class="ph ph-receipt"></i> Orders</a>
+            <a href="{% url 'admin_users' %}" class="sidebar-link active"><i class="ph ph-users"></i> Users</a>
+        </div>
+    </aside>
+
+    <div>
+        <h1 style="margin-bottom: 2rem;">Customer Management</h1>
+
+        <div class="glass-card" style="padding: 0; overflow-x: auto;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Contact Info</th>
+                        <th>Joined Date</th>
+                        <th>Status</th>
+                        <th style="width: 150px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <tr><td colspan="5" style="text-align: center; padding: 2rem;"><i class="ph ph-spinner ph-spin"></i> Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    if (!VitalisAPI.isAdmin()) window.location.href = '/';
+    else loadUsers();
+});
+
+async function loadUsers() {
+    const res = await VitalisAPI.request('/dashboard/users');
+    const tbody = document.getElementById('table-body');
+    
+    // Fallback if endpoint is under /users
+    const dataRes = res.ok ? res : await VitalisAPI.request('/users');
+    
+    if (dataRes.ok && dataRes.data.data) {
+        tbody.innerHTML = dataRes.data.data.map(u => {
+            const date = new Date(u.createdAt).toLocaleDateString();
+            const isBlocked = u.isBlocked === true;
+            
+            return `
+            <tr>
+                <td style="font-weight: 600;">${u.name}</td>
+                <td>
+                    <div>${u.email}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">${u.phone || 'No phone'}</div>
+                </td>
+                <td style="font-size: 0.9rem;">${date}</td>
+                <td>
+                    ${isBlocked 
+                        ? '<span class="badge badge-danger">Blocked</span>' 
+                        : '<span class="badge badge-success">Active</span>'}
+                </td>
+                <td>
+                    ${isBlocked 
+                        ? `<button onclick="toggleBlock('${u._id}', false)" class="btn btn-sm btn-secondary" style="padding: 0.4rem;"><i class="ph ph-check-circle"></i> Activate</button>`
+                        : `<button onclick="toggleBlock('${u._id}', true)" class="btn btn-sm btn-danger" style="padding: 0.4rem;"><i class="ph ph-prohibit"></i> Block</button>`
+                    }
+                </td>
+            </tr>
+            `;
+        }).join('');
+    } else {
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center text-danger">Failed to load users</td></tr>`;
+    }
+}
+
+async function toggleBlock(id, block) {
+    const action = block ? 'block' : 'activate';
+    if (!confirm(`Are you sure you want to ${action} this user?`)) return;
+    
+    const res = await VitalisAPI.request(`/users/${id}`, 'PUT', { isBlocked: block });
+    if (res.ok && res.data.success) {
+        VitalisAPI.showToast(`User ${action}d successfully`, 'success');
+        loadUsers();
+    } else {
+        VitalisAPI.showToast(res.data.message || `Failed to ${action} user`, 'error');
+    }
+}
+</script>
+{% endblock %}

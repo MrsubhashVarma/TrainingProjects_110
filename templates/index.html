@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="hero-section">
+    <h1 class="hero-title">Your Health, Our Priority</h1>
+    <p class="hero-subtitle">Get authentic medicines and healthcare products delivered securely to your doorstep within hours.</p>
+    <a href="{% url 'medicines' %}" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">
+        <i class="ph ph-shopping-bag"></i> Shop Now
+    </a>
+</section>
+
+<section style="margin-top: 4rem;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
+        <h2>Featured Categories</h2>
+        <a href="{% url 'medicines' %}" class="btn btn-secondary">View All</a>
+    </div>
+    <div id="category-grid" class="grid-4">
+        <!-- Categories injected via JS -->
+        <div class="glass-card" style="text-align: center; opacity: 0.5;">Loading categories...</div>
+    </div>
+</section>
+
+<section style="margin-top: 5rem;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
+        <h2>Best Selling Medicines</h2>
+    </div>
+    <div id="featured-medicines" class="grid-4">
+        <!-- Medicines injected via JS -->
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    // Fetch Categories
+    const catRes = await VitalisAPI.request('/categories');
+    const catGrid = document.getElementById('category-grid');
+    if (catRes.ok && catRes.data.data) {
+        const categories = catRes.data.data.slice(0, 4); // Show top 4
+        catGrid.innerHTML = categories.map(c => `
+            <a href="/medicines/?category=${encodeURIComponent(c.categoryName)}" class="glass-card" style="display: block; text-align: center; color: var(--text-primary);">
+                <i class="ph ph-first-aid" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
+                <h3 style="margin-bottom: 0.5rem;">${c.categoryName}</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">${c.description.substring(0, 50)}...</p>
+            </a>
+        `).join('');
+    } else {
+        catGrid.innerHTML = '<p>No categories found.</p>';
+    }
+
+    // Fetch Featured Medicines (random or highly stocked ones for demo)
+    const medRes = await VitalisAPI.request('/medicines');
+    const medGrid = document.getElementById('featured-medicines');
+    if (medRes.ok && medRes.data.data) {
+        const meds = medRes.data.data.slice(0, 4);
+        medGrid.innerHTML = meds.map(m => `
+            <div class="glass-card medicine-card">
+                <div class="img-placeholder">
+                    ${m.image ? `<img src="${m.image}" alt="${m.medicineName}" style="width:100%; height:100%; object-fit:contain; border-radius:8px;">` : '<i class="ph ph-pill"></i>'}
+                </div>
+                <h3>${m.medicineName} <span class="badge badge-primary" style="font-size: 0.6rem; float: right;">${m.category}</span></h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">By ${m.brand}</p>
+                <div class="price">₹${m.price}</div>
+                <div class="footer-actions">
+                    <a href="/medicines/${m._id}/" class="btn btn-secondary" style="flex:1;">Details</a>
+                    <button onclick="addToCart('${m._id}')" class="btn btn-primary"><i class="ph ph-shopping-cart-simple"></i></button>
+                </div>
+            </div>
+        `).join('');
+    }
+});
+
+async function addToCart(medicineId) {
+    if (!VitalisAPI.getUser()) {
+        VitalisAPI.showToast('Please login to add items to cart', 'error');
+        setTimeout(() => window.location.href = '/login/', 1500);
+        return;
+    }
+    const res = await VitalisAPI.request('/cart/add', 'POST', { medicineId: medicineId, quantity: 1 });
+    if (res.ok && res.data.success) {
+        VitalisAPI.showToast('Added to cart successfully!', 'success');
+    } else {
+        VitalisAPI.showToast(res.data.message || 'Failed to add to cart', 'error');
+    }
+}
+</script>
+{% endblock %}

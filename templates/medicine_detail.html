@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div id="loading" style="text-align: center; margin: 4rem 0;">
+    <i class="ph ph-spinner ph-spin" style="font-size: 3rem; color: var(--accent-primary);"></i>
+</div>
+
+<div id="detail-container" style="display: none; max-width: 1000px; margin: 0 auto;">
+    <div class="glass-card" style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+        
+        <!-- Image Section -->
+        <div id="med-image" class="img-placeholder" style="height: 400px; background: var(--bg-tertiary); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 5rem; color: var(--text-muted);">
+            <!-- Image injected by JS -->
+        </div>
+
+        <!-- Details Section -->
+        <div style="display: flex; flex-direction: column; justify-content: center;">
+            <div style="margin-bottom: 0.5rem;">
+                <span id="med-category" class="badge badge-primary"></span>
+            </div>
+            <h1 id="med-name" style="margin-bottom: 0.5rem; font-size: 2.5rem;"></h1>
+            <p id="med-brand" style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 1.5rem;"></p>
+            
+            <div id="med-price" style="font-size: 2.5rem; font-weight: 700; color: var(--accent-primary); margin-bottom: 1.5rem;"></div>
+            
+            <div id="med-stock-status" style="margin-bottom: 2rem; font-weight: 500;"></div>
+
+            <p id="med-desc" style="margin-bottom: 2rem; color: var(--text-secondary); line-height: 1.8;"></p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: var(--radius-sm);">
+                <div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Manufacturer</div>
+                    <div id="med-mfg" style="font-weight: 500;"></div>
+                </div>
+                <div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Expiry Date</div>
+                    <div id="med-exp" style="font-weight: 500;"></div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <div style="display: flex; align-items: center; background: var(--bg-tertiary); border-radius: var(--radius-sm); overflow: hidden;">
+                    <button onclick="changeQty(-1)" class="btn" style="background: transparent; border-radius: 0; padding: 0.75rem 1rem;">-</button>
+                    <input type="number" id="qty-input" value="1" min="1" style="width: 50px; text-align: center; background: transparent; border: none; color: white; font-weight: bold; outline: none;">
+                    <button onclick="changeQty(1)" class="btn" style="background: transparent; border-radius: 0; padding: 0.75rem 1rem;">+</button>
+                </div>
+                <button id="add-to-cart-btn" onclick="addToCart()" class="btn btn-primary" style="flex: 1; padding: 1rem;">
+                    <i class="ph ph-shopping-cart-simple"></i> Add to Cart
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const medicineId = "{{ medicine_id }}";
+    let maxStock = 0;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        const res = await VitalisAPI.request(`/medicines/${medicineId}`);
+        document.getElementById('loading').style.display = 'none';
+
+        if (res.ok && res.data.data) {
+            const m = res.data.data;
+            maxStock = m.stock;
+
+            document.getElementById('detail-container').style.display = 'block';
+            document.getElementById('med-name').textContent = m.medicineName;
+            document.getElementById('med-brand').textContent = `By ${m.brand}`;
+            document.getElementById('med-category').textContent = m.category;
+            document.getElementById('med-price').textContent = `₹${m.price}`;
+            document.getElementById('med-desc').textContent = m.description;
+            document.getElementById('med-mfg').textContent = m.manufacturer || 'N/A';
+            
+            const expDate = m.expiryDate ? new Date(m.expiryDate).toLocaleDateString() : 'N/A';
+            document.getElementById('med-exp').textContent = expDate;
+
+            const stockStatus = document.getElementById('med-stock-status');
+            const btn = document.getElementById('add-to-cart-btn');
+            const qtyInput = document.getElementById('qty-input');
+
+            if (m.stock > 0) {
+                stockStatus.innerHTML = `<span style="color: var(--success);"><i class="ph ph-check-circle"></i> In Stock (${m.stock} available)</span>`;
+                qtyInput.max = m.stock;
+            } else {
+                stockStatus.innerHTML = `<span style="color: var(--danger);"><i class="ph ph-x-circle"></i> Out of Stock</span>`;
+                btn.disabled = true;
+                qtyInput.disabled = true;
+                btn.innerHTML = 'Out of Stock';
+            }
+
+            if (m.image) {
+                document.getElementById('med-image').innerHTML = `<img src="${m.image}" alt="${m.medicineName}" style="width:100%; height:100%; object-fit:contain; border-radius:8px;">`;
+            } else {
+                document.getElementById('med-image').innerHTML = '<i class="ph ph-pill"></i>';
+            }
+        } else {
+            VitalisAPI.showToast('Medicine not found', 'error');
+            setTimeout(() => window.location.href = '/medicines/', 1500);
+        }
+    });
+
+    function changeQty(delta) {
+        const input = document.getElementById('qty-input');
+        if (input.disabled) return;
+        let val = parseInt(input.value) + delta;
+        if (val < 1) val = 1;
+        if (val > maxStock) val = maxStock;
+        input.value = val;
+    }
+
+    async function addToCart() {
+        if (!VitalisAPI.getUser()) {
+            VitalisAPI.showToast('Please login to add items to cart', 'error');
+            setTimeout(() => window.location.href = '/login/', 1500);
+            return;
+        }
+        
+        const qty = parseInt(document.getElementById('qty-input').value);
+        const btn = document.getElementById('add-to-cart-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Adding...';
+
+        const res = await VitalisAPI.request('/cart/add', 'POST', { medicineId: medicineId, quantity: qty });
+        
+        btn.disabled = false;
+        btn.innerHTML = '<i class="ph ph-shopping-cart-simple"></i> Add to Cart';
+
+        if (res.ok && res.data.success) {
+            VitalisAPI.showToast('Added to cart successfully!', 'success');
+        } else {
+            VitalisAPI.showToast(res.data.message || 'Failed to add to cart', 'error');
+        }
+    }
+</script>
+{% endblock %}

@@ -80,3 +80,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # No SQL database needed - we use MongoDB directly via pymongo
 DATABASES = {}
+
+# Fix for Windows CSS MIME type issue
+import mimetypes
+mimetypes.add_type("text/css", ".css", True)

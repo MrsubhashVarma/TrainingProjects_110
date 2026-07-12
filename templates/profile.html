@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+    <h1 style="margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem;">
+        <i class="ph ph-user-circle"></i> My Profile
+    </h1>
+
+    <div class="glass-card">
+        <form id="profile-form">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" id="prof-name" class="form-control" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label class="form-label">Email Address (Read Only)</label>
+                    <input type="email" id="prof-email" class="form-control" disabled style="opacity: 0.7; cursor: not-allowed;">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" id="prof-phone" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Default Delivery Address</label>
+                <textarea id="prof-address" class="form-control" rows="3"></textarea>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 2rem 0;">
+            <h3 style="margin-bottom: 1.5rem;">Change Password</h3>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label class="form-label">Current Password</label>
+                    <input type="password" id="current-pass" class="form-control" placeholder="Leave blank to keep current">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label class="form-label">New Password</label>
+                    <input type="password" id="new-pass" class="form-control" placeholder="New password">
+                </div>
+            </div>
+
+            <div style="text-align: right; margin-top: 2rem;">
+                <button type="submit" class="btn btn-primary">
+                    <i class="ph ph-floppy-disk"></i> Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    if (!VitalisAPI.getUser()) {
+        window.location.href = '/login/';
+        return;
+    }
+
+    const res = await VitalisAPI.request('/profile');
+    if (res.ok && res.data.data) {
+        const u = res.data.data;
+        document.getElementById('prof-name').value = u.name;
+        document.getElementById('prof-email').value = u.email;
+        document.getElementById('prof-phone').value = u.phone || '';
+        document.getElementById('prof-address').value = u.address || '';
+    }
+});
+
+document.getElementById('profile-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Saving...';
+    btn.disabled = true;
+
+    const data = {
+        name: document.getElementById('prof-name').value,
+        phone: document.getElementById('prof-phone').value,
+        address: document.getElementById('prof-address').value,
+    };
+
+    const currentPass = document.getElementById('current-pass').value;
+    const newPass = document.getElementById('new-pass').value;
+
+    if (newPass) {
+        if (!currentPass) {
+            VitalisAPI.showToast('Current password required to set a new one', 'warning');
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+            return;
+        }
+        data.currentPassword = currentPass;
+        data.newPassword = newPass;
+    }
+
+    const res = await VitalisAPI.request('/profile', 'PUT', data);
+    
+    btn.innerHTML = originalText;
+    btn.disabled = false;
+
+    if (res.ok && res.data.success) {
+        VitalisAPI.showToast('Profile updated successfully', 'success');
+        VitalisAPI.setAuth(localStorage.getItem('vitalis_token'), res.data.data);
+        document.getElementById('current-pass').value = '';
+        document.getElementById('new-pass').value = '';
+    } else {
+        VitalisAPI.showToast(res.data.message || 'Failed to update profile', 'error');
+    }
+});
+</script>
+{% endblock %}

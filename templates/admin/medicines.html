@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="layout-sidebar">
+    <!-- Admin Sidebar -->
+    <aside>
+        <div class="glass-card sidebar-nav">
+            <h3 style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Admin Panel</h3>
+            <a href="{% url 'admin_dashboard' %}" class="sidebar-link"><i class="ph ph-squares-four"></i> Dashboard</a>
+            <a href="{% url 'admin_medicines' %}" class="sidebar-link active"><i class="ph ph-pill"></i> Medicines</a>
+            <a href="{% url 'admin_categories' %}" class="sidebar-link"><i class="ph ph-list-dashes"></i> Categories</a>
+            <a href="{% url 'admin_orders' %}" class="sidebar-link"><i class="ph ph-receipt"></i> Orders</a>
+            <a href="{% url 'admin_users' %}" class="sidebar-link"><i class="ph ph-users"></i> Users</a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h1>Medicine Management</h1>
+            <button onclick="openModal()" class="btn btn-primary"><i class="ph ph-plus"></i> Add Medicine</button>
+        </div>
+
+        <div class="glass-card" style="padding: 0; overflow-x: auto;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th style="width: 60px;">Img</th>
+                        <th>Name & Brand</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th style="width: 120px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <tr><td colspan="6" style="text-align: center; padding: 2rem;"><i class="ph ph-spinner ph-spin"></i> Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="medicine-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center;">
+    <div class="glass-card" style="width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; background: var(--bg-secondary);">
+        <h2 id="modal-title" style="margin-bottom: 1.5rem;">Add Medicine</h2>
+        <form id="medicine-form">
+            <input type="hidden" id="med-id">
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label class="form-label">Medicine Name *</label>
+                    <input type="text" id="med-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Brand *</label>
+                    <input type="text" id="med-brand" class="form-control" required>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label class="form-label">Category *</label>
+                    <select id="med-category" class="form-control" required></select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Manufacturer</label>
+                    <input type="text" id="med-mfg" class="form-control">
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label class="form-label">Price (₹) *</label>
+                    <input type="number" id="med-price" class="form-control" min="0" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Stock *</label>
+                    <input type="number" id="med-stock" class="form-control" min="0" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Expiry Date</label>
+                <input type="date" id="med-exp" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Image Upload</label>
+                <input type="file" id="med-image" class="form-control" accept="image/*">
+                <small style="color: var(--text-muted);">Leave empty to keep existing image</small>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Description</label>
+                <textarea id="med-desc" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
+                <button type="button" onclick="closeModal()" class="btn btn-secondary">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Medicine</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+let categories = [];
+let medicinesData = [];
+
+document.addEventListener('DOMContentLoaded', async () => {
+    if (!VitalisAPI.isAdmin()) window.location.href = '/';
+    else {
+        // Load categories for dropdown
+        const catRes = await VitalisAPI.request('/categories');
+        if (catRes.ok && catRes.data.data) {
+            categories = catRes.data.data;
+            const select = document.getElementById('med-category');
+            select.innerHTML = '<option value="">Select Category</option>' + categories.map(c => `<option value="${c.categoryName}">${c.categoryName}</option>`).join('');
+        }
+        loadMedicines();
+    }
+});
+
+async function loadMedicines() {
+    const res = await VitalisAPI.request('/medicines');
+    const tbody = document.getElementById('table-body');
+    if (res.ok && res.data.data) {
+        medicinesData = res.data.data;
+        tbody.innerHTML = medicinesData.map((m, idx) => `
+            <tr>
+                <td>
+                    <div style="width: 40px; height: 40px; background: var(--bg-tertiary); border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                        ${m.image ? `<img src="${m.image}" style="max-width:100%; max-height:100%; border-radius:4px;">` : `<i class="ph ph-pill"></i>`}
+                    </div>
+                </td>
+                <td>
+                    <div style="font-weight: 600;">${m.medicineName}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">${m.brand}</div>
+                </td>
+                <td><span class="badge badge-primary">${m.category}</span></td>
+                <td style="font-weight: 600;">₹${m.price}</td>
+                <td>
+                    <span class="${m.stock < 10 ? 'text-danger font-weight-bold' : ''}">${m.stock}</span>
+                </td>
+                <td>
+                    <button onclick="editMedicine(${idx})" class="btn btn-sm btn-secondary" style="padding: 0.4rem; margin-right: 0.5rem;"><i class="ph ph-pencil-simple"></i></button>
+                    <button onclick="deleteMedicine('${m._id}')" class="btn btn-sm btn-danger" style="padding: 0.4rem;"><i class="ph ph-trash"></i></button>
+                </td>
+            </tr>
+        `).join('');
+    } else {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Failed to load medicines</td></tr>`;
+    }
+}
+
+function openModal() {
+    document.getElementById('modal-title').textContent = 'Add Medicine';
+    document.getElementById('medicine-form').reset();
+    document.getElementById('med-id').value = '';
+    document.getElementById('medicine-modal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('medicine-modal').style.display = 'none';
+}
+
+function editMedicine(index) {
+    const m = medicinesData[index];
+    document.getElementById('modal-title').textContent = 'Edit Medicine';
+    document.getElementById('med-id').value = m._id;
+    document.getElementById('med-name').value = m.medicineName;
+    document.getElementById('med-brand').value = m.brand;
+    document.getElementById('med-category').value = m.category;
+    document.getElementById('med-mfg').value = m.manufacturer || '';
+    document.getElementById('med-price').value = m.price;
+    document.getElementById('med-stock').value = m.stock;
+    document.getElementById('med-exp').value = m.expiryDate ? m.expiryDate.split('T')[0] : '';
+    document.getElementById('med-desc').value = m.description || '';
+    document.getElementById('medicine-modal').style.display = 'flex';
+}
+
+document.getElementById('medicine-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('med-id').value;
+    const fileInput = document.getElementById('med-image');
+    
+    // Use FormData for file upload
+    const formData = new FormData();
+    formData.append('medicineName', document.getElementById('med-name').value);
+    formData.append('brand', document.getElementById('med-brand').value);
+    formData.append('category', document.getElementById('med-category').value);
+    formData.append('manufacturer', document.getElementById('med-mfg').value);
+    formData.append('price', document.getElementById('med-price').value);
+    formData.append('stock', document.getElementById('med-stock').value);
+    formData.append('expiryDate', document.getElementById('med-exp').value);
+    formData.append('description', document.getElementById('med-desc').value);
+    
+    if (fileInput.files.length > 0) {
+        formData.append('image', fileInput.files[0]);
+    }
+
+    const endpoint = id ? `/medicines/${id}` : '/medicines';
+    const method = id ? 'PUT' : 'POST';
+
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Saving...';
+    btn.disabled = true;
+
+    const res = await VitalisAPI.request(endpoint, method, formData, true); // true for FormData
+    
+    btn.innerHTML = 'Save Medicine';
+    btn.disabled = false;
+
+    if (res.ok && res.data.success) {
+        VitalisAPI.showToast(id ? 'Medicine updated' : 'Medicine added', 'success');
+        closeModal();
+        loadMedicines();
+    } else {
+        VitalisAPI.showToast(res.data.message || 'Action failed', 'error');
+    }
+});
+
+async function deleteMedicine(id) {
+    if (!confirm('Are you sure you want to delete this medicine?')) return;
+    const res = await VitalisAPI.request(`/medicines/${id}`, 'DELETE');
+    if (res.ok && res.data.success) {
+        VitalisAPI.showToast('Medicine deleted', 'success');
+        loadMedicines();
+    } else {
+        VitalisAPI.showToast(res.data.message || 'Delete failed', 'error');
+    }
+}
+</script>
+{% endblock %}
