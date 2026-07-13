@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div style="max-width: 500px; margin: 4rem auto;">
+    <div class="glass-card">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <i class="ph ph-user-plus" style="font-size: 3rem; color: var(--accent-primary);"></i>
+            <h2 style="margin-top: 0.5rem;">Create an Account</h2>
+            <p style="color: var(--text-secondary);">Join Vitalis Pharmacy today</p>
+        </div>
+
+        <form id="register-form">
+            <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" id="name" class="form-control" placeholder="John Doe" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" id="email" class="form-control" placeholder="john@example.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" id="phone" class="form-control" placeholder="10-digit number">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Delivery Address</label>
+                <textarea id="address" class="form-control" rows="2" placeholder="Full address for delivery"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="••••••••" required minlength="6">
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                <i class="ph ph-user-plus"></i> Sign Up
+            </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 1.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+            Already have an account? <a href="{% url 'login' %}" style="font-weight: 600;">Log in here</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('register-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Creating account...';
+    btn.disabled = true;
+
+    const data = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        address: document.getElementById('address').value,
+        password: document.getElementById('password').value
+    };
+
+    const res = await VitalisAPI.request('/register', 'POST', data);
+    
+    if (res.ok && res.data.success) {
+        VitalisAPI.setAuth(res.data.data.token, res.data.data.user);
+        VitalisAPI.showToast('Registration successful!', 'success');
+        setTimeout(() => window.location.href = '/', 1500);
+    } else {
+        VitalisAPI.showToast(res.data.message || 'Registration failed', 'error');
+        btn.innerHTML = '<i class="ph ph-user-plus"></i> Sign Up';
+        btn.disabled = false;
+    }
+});
+</script>
+{% endblock %}

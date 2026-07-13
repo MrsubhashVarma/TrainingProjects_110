@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="layout-sidebar">
+    <!-- Admin Sidebar -->
+    <aside>
+        <div class="glass-card sidebar-nav">
+            <h3 style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Admin Panel</h3>
+            <a href="{% url 'admin_dashboard' %}" class="sidebar-link"><i class="ph ph-squares-four"></i> Dashboard</a>
+            <a href="{% url 'admin_medicines' %}" class="sidebar-link"><i class="ph ph-pill"></i> Medicines</a>
+            <a href="{% url 'admin_categories' %}" class="sidebar-link active"><i class="ph ph-list-dashes"></i> Categories</a>
+            <a href="{% url 'admin_orders' %}" class="sidebar-link"><i class="ph ph-receipt"></i> Orders</a>
+            <a href="{% url 'admin_users' %}" class="sidebar-link"><i class="ph ph-users"></i> Users</a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h1>Category Management</h1>
+            <button onclick="openModal()" class="btn btn-primary"><i class="ph ph-plus"></i> Add Category</button>
+        </div>
+
+        <div class="glass-card" style="padding: 0; overflow-x: auto;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Category Name</th>
+                        <th>Description</th>
+                        <th style="width: 150px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <tr><td colspan="3" style="text-align: center; padding: 2rem;"><i class="ph ph-spinner ph-spin"></i> Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="category-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center;">
+    <div class="glass-card" style="width: 100%; max-width: 500px; background: var(--bg-secondary);">
+        <h2 id="modal-title" style="margin-bottom: 1.5rem;">Add Category</h2>
+        <form id="category-form">
+            <input type="hidden" id="cat-id">
+            <div class="form-group">
+                <label class="form-label">Category Name</label>
+                <input type="text" id="cat-name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Description</label>
+                <textarea id="cat-desc" class="form-control" rows="3"></textarea>
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
+                <button type="button" onclick="closeModal()" class="btn btn-secondary">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Category</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    if (!VitalisAPI.isAdmin()) window.location.href = '/';
+    else loadCategories();
+});
+
+async function loadCategories() {
+    const res = await VitalisAPI.request('/categories');
+    const tbody = document.getElementById('table-body');
+    if (res.ok && res.data.data) {
+        tbody.innerHTML = res.data.data.map(c => `
+            <tr>
+                <td style="font-weight: 600;">${c.categoryName}</td>
+                <td style="color: var(--text-secondary);">${c.description || '-'}</td>
+                <td>
+                    <button onclick="editCategory('${c._id}', '${c.categoryName}', '${c.description.replace(/'/g, "\\'")}')" class="btn btn-sm btn-secondary" style="padding: 0.4rem; margin-right: 0.5rem;"><i class="ph ph-pencil-simple"></i></button>
+                    <button onclick="deleteCategory('${c._id}')" class="btn btn-sm btn-danger" style="padding: 0.4rem;"><i class="ph ph-trash"></i></button>
+                </td>
+            </tr>
+        `).join('');
+    } else {
+        tbody.innerHTML = `<tr><td colspan="3" class="text-center text-danger">Failed to load categories</td></tr>`;
+    }
+}
+
+function openModal() {
+    document.getElementById('modal-title').textContent = 'Add Category';
+    document.getElementById('cat-id').value = '';
+    document.getElementById('cat-name').value = '';
+    document.getElementById('cat-desc').value = '';
+    document.getElementById('category-modal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('category-modal').style.display = 'none';
+}
+
+function editCategory(id, name, desc) {
+    document.getElementById('modal-title').textContent = 'Edit Category';
+    document.getElementById('cat-id').value = id;
+    document.getElementById('cat-name').value = name;
+    document.getElementById('cat-desc').value = desc !== 'undefined' ? desc : '';
+    document.getElementById('category-modal').style.display = 'flex';
+}
+
+document.getElementById('category-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('cat-id').value;
+    const data = {
+        categoryName: document.getElementById('cat-name').value,
+        description: document.getElementById('cat-desc').value
+    };
+
+    const endpoint = id ? `/categories/${id}` : '/categories';
+    const method = id ? 'PUT' : 'POST';
+
+    const res = await VitalisAPI.request(endpoint, method, data);
+    if (res.ok && res.data.success) {
+        VitalisAPI.showToast(id ? 'Category updated' : 'Category added', 'success');
+        closeModal();
+        loadCategories();
+    } else {
+        VitalisAPI.showToast(res.data.message || 'Action failed', 'error');
+    }
+});
+
+async function deleteCategory(id) {
+    if (!confirm('Are you sure you want to delete this category?')) return;
+    const res = await VitalisAPI.request(`/categories/${id}`, 'DELETE');
+    if (res.ok && res.data.success) {
+        VitalisAPI.showToast('Category deleted', 'success');
+        loadCategories();
+    } else {
+        VitalisAPI.showToast(res.data.message || 'Delete failed', 'error');
+    }
+}
+</script>
+{% endblock %}
