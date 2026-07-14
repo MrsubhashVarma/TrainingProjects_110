@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patients - Hospital Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="loadData('patients')">
+    <aside class="sidebar">
+        <a href="index.html" class="logo">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#38bdf8" />
+                        <stop offset="100%" stop-color="#4f46e5" />
+                    </linearGradient>
+                </defs>
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+            <span>MediCare+</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="patients.html" class="active">Patients</a></li>
+            <li><a href="doctors.html">Doctors</a></li>
+            <li><a href="appointments.html">Appointments</a></li>
+            <li><a href="records.html">Records</a></li>
+            <li><a href="billing.html">Billing</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <div class="header-actions">
+            <h2>Patient Management</h2>
+            <button class="btn btn-primary" onclick="openModal('patientModal'); document.getElementById('patientForm').reset(); document.getElementById('patientForm').patient_id.value='';">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Add New Patient
+            </button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Phone</th>
+                        <th>Blood Group</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="patients-tbody">
+                    <!-- Dynamic Data -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Add/Edit Modal -->
+    <div class="modal" id="patientModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="color:white; font-size:1.5rem;">Patient Details</h3>
+                <button class="close-btn" onclick="closeModal('patientModal')">&times;</button>
+            </div>
+            <form id="patientForm" onsubmit="savePatient(event)">
+                <input type="hidden" name="patient_id">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="patient_name" class="form-control" required>
+                </div>
+                <div class="form-group" style="display:flex; gap: 1rem;">
+                    <div style="flex: 1;">
+                        <label>Age</label>
+                        <input type="number" name="age" class="form-control" required>
+                    </div>
+                    <div style="flex: 1;">
+                        <label>Gender</label>
+                        <select name="gender" class="form-control" required style="background:rgba(15,23,42,0.5); color:white;">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" name="phone" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Blood Group</label>
+                    <input type="text" name="blood_group" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <textarea name="address" class="form-control" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content:center;">Save Patient</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Hospital Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <aside class="sidebar">
+        <a href="index.html" class="logo">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#38bdf8" />
+                        <stop offset="100%" stop-color="#4f46e5" />
+                    </linearGradient>
+                </defs>
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+            <span>MediCare+</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="patients.html">Patients</a></li>
+            <li><a href="doctors.html">Doctors</a></li>
+            <li><a href="appointments.html">Appointments</a></li>
+            <li><a href="records.html">Records</a></li>
+            <li><a href="billing.html">Billing</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <div class="header-actions">
+            <div>
+                <h2>Overview Dashboard</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Welcome back, Admin</p>
+            </div>
+            <button class="btn btn-primary" onclick="loadDashboard()">Refresh Data</button>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card stat-card">
+                <h3>Total Patients</h3>
+                <div class="value" id="total-patients">0</div>
+            </div>
+            <div class="card stat-card">
+                <h3>Total Doctors</h3>
+                <div class="value" id="total-doctors">0</div>
+            </div>
+            <div class="card stat-card">
+                <h3>Today's Appointments</h3>
+                <div class="value" id="today-appointments">0</div>
+            </div>
+            <div class="card stat-card">
+                <h3>Total Revenue</h3>
+                <div class="value" id="total-revenue">$0</div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="revenueChart"></canvas>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', loadDashboard);
+        
+        let revenueChartInstance = null;
+
+        async function loadDashboard() {
+            try {
+                const response = await fetch('http://localhost:8000/dashboard/');
+                if (!response.ok) throw new Error("Network response was not ok");
+                const data = await response.json();
+                
+                document.getElementById('total-patients').innerText = data.total_patients;
+                document.getElementById('total-doctors').innerText = data.total_doctors;
+                document.getElementById('today-appointments').innerText = data.today_appointments;
+                document.getElementById('total-revenue').innerText = `$${data.total_revenue || 0}`;
+
+                // Init chart
+                const ctx = document.getElementById('revenueChart').getContext('2d');
+                if (revenueChartInstance) {
+                    revenueChartInstance.destroy();
+                }
+
+                // Dummy data for visual since backend doesn't have historical data yet
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
+                const revenues = [5000, 7000, 8500, 10200, 9800, 12000, data.total_revenue || 15000];
+
+                revenueChartInstance = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: months,
+                        datasets: [{
+                            label: 'Revenue Growth',
+                            data: revenues,
+                            borderColor: '#38bdf8',
+                            backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: { color: '#f8fafc' }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                ticks: { color: '#94a3b8' }
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: '#94a3b8' }
+                            }
+                        }
+                    }
+                });
+
+            } catch (error) {
+                console.error("Failed to load dashboard stats", error);
+            }
+        }
+    </script>
+</body>
+</html>

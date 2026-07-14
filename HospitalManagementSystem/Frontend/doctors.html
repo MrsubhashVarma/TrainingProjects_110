@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors - Hospital Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="loadData('doctors')">
+    <aside class="sidebar">
+        <a href="index.html" class="logo">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#38bdf8" />
+                        <stop offset="100%" stop-color="#4f46e5" />
+                    </linearGradient>
+                </defs>
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+            <span>MediCare+</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="patients.html">Patients</a></li>
+            <li><a href="doctors.html" class="active">Doctors</a></li>
+            <li><a href="appointments.html">Appointments</a></li>
+            <li><a href="records.html">Records</a></li>
+            <li><a href="billing.html">Billing</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <div class="header-actions">
+            <h2>Doctor Management</h2>
+            <button class="btn btn-primary" onclick="openModal('doctorModal'); document.getElementById('doctorForm').reset(); document.getElementById('doctorForm').doctor_id.value='';">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Add New Doctor
+            </button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Specialization</th>
+                        <th>Department</th>
+                        <th>Experience</th>
+                        <th>Fee</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="doctors-tbody">
+                    <!-- Dynamic Data -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Add/Edit Modal -->
+    <div class="modal" id="doctorModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="color:white; font-size:1.5rem;">Doctor Details</h3>
+                <button class="close-btn" onclick="closeModal('doctorModal')">&times;</button>
+            </div>
+            <form id="doctorForm" onsubmit="saveDoctor(event)">
+                <input type="hidden" name="doctor_id">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="doctor_name" class="form-control" required>
+                </div>
+                <div class="form-group" style="display:flex; gap: 1rem;">
+                    <div style="flex: 1;">
+                        <label>Specialization</label>
+                        <input type="text" name="specialization" class="form-control" required>
+                    </div>
+                    <div style="flex: 1;">
+                        <label>Department</label>
+                        <input type="text" name="department" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group" style="display:flex; gap: 1rem;">
+                    <div style="flex: 1;">
+                        <label>Experience (Years)</label>
+                        <input type="number" name="experience" class="form-control" required>
+                    </div>
+                    <div style="flex: 1;">
+                        <label>Consultation Fee</label>
+                        <input type="number" step="0.01" name="consultation_fee" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" name="phone" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content:center;">Save Doctor</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
