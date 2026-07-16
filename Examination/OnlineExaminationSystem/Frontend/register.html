@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Examination System | Register</title>
+  <meta name="description" content="Register as a new student to take online examinations and evaluate results.">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <div class="container navbar">
+      <a href="index.html" class="logo">
+        <span>Examify</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="exams.html" class="nav-link">Exams</a></li>
+          <li id="student-dash-nav" style="display:none;"><a href="student_dashboard.html" class="nav-link">Dashboard</a></li>
+          <li id="admin-dash-nav" style="display:none;"><a href="admin_dashboard.html" class="nav-link">Admin Portal</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-btn" aria-label="Toggle Theme">🌓</button>
+        <div id="auth-buttons">
+          <a href="login.html" class="btn btn-secondary btn-sm">Login</a>
+          <a href="register.html" class="btn btn-primary btn-sm active">Register</a>
+        </div>
+        <div id="user-menu" style="display:none; align-items:center; gap:1rem;">
+          <span id="user-name" style="font-weight:600; font-size:0.9rem;"></span>
+          <button id="logout-btn" class="btn btn-secondary btn-sm">Logout</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Register Form Container -->
+  <main class="container" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem 0;">
+    <div class="form-container" style="max-width: 500px;">
+      <div class="form-header">
+        <h2>Student Registration</h2>
+        <p>Create a student account to enroll in courses and sit for exams</p>
+      </div>
+
+      <form id="register-form">
+        <div class="form-group">
+          <label for="reg-id" class="form-label">Student ID (Optional, numeric)</label>
+          <input type="number" id="reg-id" class="form-input" placeholder="e.g. 102" min="1">
+        </div>
+
+        <div class="form-group">
+          <label for="reg-name" class="form-label">Full Name</label>
+          <input type="text" id="reg-name" class="form-input" placeholder="e.g. Rahul Sharma" required autocomplete="name">
+        </div>
+
+        <div class="form-group">
+          <label for="reg-email" class="form-label">Email Address</label>
+          <input type="email" id="reg-email" class="form-input" placeholder="e.g. rahul@gmail.com" required autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label for="reg-phone" class="form-label">Phone Number</label>
+          <input type="tel" id="reg-phone" class="form-input" placeholder="e.g. 9876543210" required autocomplete="tel">
+        </div>
+
+        <div class="form-group">
+          <label for="reg-college" class="form-label">College / Institution</label>
+          <input type="text" id="reg-college" class="form-input" placeholder="e.g. ABC Engineering College" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 2rem;">
+          <label for="reg-password" class="form-label">Password</label>
+          <input type="password" id="reg-password" class="form-input" placeholder="••••••••" required autocomplete="new-password">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;">Register Account</button>
+      </form>
+
+      <div class="form-footer">
+        Already have an account? <a href="login.html">Sign In</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Examify Online Examination Portal. Developed for Python-FSD.</p>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+</body>
+</html>

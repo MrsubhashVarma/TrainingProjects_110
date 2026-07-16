@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Examination System | Student Dashboard</title>
+  <meta name="description" content="View your pending exams, completed assessments, recent scores, and compare rankings on the student leaderboard.">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <div class="container navbar">
+      <a href="index.html" class="logo">
+        <span>Examify</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="exams.html" class="nav-link">Exams</a></li>
+          <li><a href="student_dashboard.html" class="nav-link active">Dashboard</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-btn" aria-label="Toggle Theme">🌓</button>
+        <div id="user-menu" style="display:flex; align-items:center; gap:1rem;">
+          <span id="user-name" style="font-weight:600; font-size:0.9rem;">Loading...</span>
+          <button id="logout-btn" class="btn btn-secondary btn-sm">Logout</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dashboard Container -->
+  <main class="container" style="flex: 1; padding-bottom: 3rem;">
+    <div class="dashboard-grid">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <ul class="sidebar-menu">
+          <li><div class="sidebar-link active" onclick="location.reload()">📊 Summary Dashboard</div></li>
+          <li><a href="exams.html" class="sidebar-link">📝 Available Exams</a></li>
+          <li><a href="index.html#about" class="sidebar-link">ℹ️ System Guidelines</a></li>
+        </ul>
+      </aside>
+
+      <!-- Main Dashboard Content -->
+      <section style="display: flex; flex-direction: column; gap: 2rem;">
+        
+        <!-- Welcome Card -->
+        <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%); border-radius: var(--radius-lg); padding: 2rem; color: #ffffff; box-shadow: var(--shadow-lg);">
+          <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem;" id="welcome-message">Welcome back, Student!</h2>
+          <p style="opacity: 0.9; font-size: 0.95rem;">Track your progress, view credentials, and launch registered exam sheets from your student portal dashboard.</p>
+        </div>
+
+        <!-- Metrics Row -->
+        <div class="stats-row">
+          <!-- Registered Count -->
+          <div class="stat-card">
+            <div class="stat-icon">📝</div>
+            <div class="stat-info">
+              <h3 id="stat-registered">0</h3>
+              <p>Registered Exams</p>
+            </div>
+          </div>
+          <!-- Completed Count -->
+          <div class="stat-card">
+            <div class="stat-icon success">✅</div>
+            <div class="stat-info">
+              <h3 id="stat-completed">0</h3>
+              <p>Completed Exams</p>
+            </div>
+          </div>
+          <!-- Pending Count -->
+          <div class="stat-card">
+            <div class="stat-icon warning">⌛</div>
+            <div class="stat-info">
+              <h3 id="stat-pending">0</h3>
+              <p>Pending Exams</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Details Grid -->
+        <div style="display: grid; grid-template-columns: 1fr 320px; gap: 1.5rem; align-items: start;">
+          <!-- Recent Results Table -->
+          <div>
+            <div class="section-header" style="margin-bottom: 1rem;">
+              <div class="section-title">
+                <h3 style="font-size: 1.2rem; font-weight: 700;">My Examination Results</h3>
+              </div>
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Exam Title</th>
+                    <th>Obtained Marks</th>
+                    <th>Percentage</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="student-results-rows">
+                  <tr>
+                    <td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 2rem;">
+                      Loading your exam history...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Leaderboard Panel -->
+          <div class="leaderboard-panel">
+            <div class="leaderboard-title">
+              <span>🏆 Top Performers</span>
+              <select id="leaderboard-exam-filter" class="form-input" style="width: auto; padding: 0.2rem 0.5rem; font-size: 0.75rem; margin: 0; background-color: var(--bg-secondary); border-radius: var(--radius-sm);">
+                <option value="">All Exams</option>
+              </select>
+            </div>
+            <div class="leaderboard-list" id="leaderboard-container">
+              <!-- Dynamically populated via script.js -->
+              <div style="text-align: center; color: var(--text-secondary); font-size: 0.85rem; padding: 2rem 0;">
+                Loading leaderboard...
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Examify Online Examination Portal. Developed for Python-FSD.</p>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+</body>
+</html>

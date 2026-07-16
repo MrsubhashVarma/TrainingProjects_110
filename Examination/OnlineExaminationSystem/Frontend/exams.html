@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Examination System | Available Exams</title>
+  <meta name="description" content="Browse available online examinations, courses, subjects, and schedules.">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <div class="container navbar">
+      <a href="index.html" class="logo">
+        <span>Examify</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="exams.html" class="nav-link active">Exams</a></li>
+          <li id="student-dash-nav" style="display:none;"><a href="student_dashboard.html" class="nav-link">Dashboard</a></li>
+          <li id="admin-dash-nav" style="display:none;"><a href="admin_dashboard.html" class="nav-link">Admin Portal</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-btn" aria-label="Toggle Theme">🌓</button>
+        <div id="auth-buttons">
+          <a href="login.html" class="btn btn-secondary btn-sm">Login</a>
+          <a href="register.html" class="btn btn-primary btn-sm">Register</a>
+        </div>
+        <div id="user-menu" style="display:none; align-items:center; gap:1rem;">
+          <span id="user-name" style="font-weight:600; font-size:0.9rem;"></span>
+          <button id="logout-btn" class="btn btn-secondary btn-sm">Logout</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Exams Listing Grid -->
+  <main class="container" style="flex: 1; padding: 3rem 1.5rem;">
+    <div class="section-header">
+      <div class="section-title">
+        <h2>Available Examinations</h2>
+        <p>Select an exam below to start your digital assessment session</p>
+      </div>
+      <div>
+        <input type="text" id="exam-search" class="form-input" placeholder="Search exams by title or subject..." style="width: 250px; padding: 0.5rem 1rem;">
+      </div>
+    </div>
+
+    <div class="grid-3" id="exams-container">
+      <!-- Dynamically filled with cards via script.js -->
+      <div style="grid-column: 1 / -1; text-align: center; color: var(--text-secondary); padding: 3rem;">
+        Loading examinations from database...
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Examify Online Examination Portal. Developed for Python-FSD.</p>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+</body>
+</html>

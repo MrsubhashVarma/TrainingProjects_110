@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Examination System | Admin Dashboard</title>
+  <meta name="description" content="Manage students, edit examinations, add questions, evaluate submissions and update results inside the administrator dashboard.">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <div class="container navbar">
+      <a href="index.html" class="logo">
+        <span>Examify Admin</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="exams.html" class="nav-link">Exams</a></li>
+          <li><a href="admin_dashboard.html" class="nav-link active">Admin Portal</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-btn" aria-label="Toggle Theme">🌓</button>
+        <div id="user-menu" style="display:flex; align-items:center; gap:1rem;">
+          <span id="user-name" style="font-weight:600; font-size:0.9rem;">Administrator</span>
+          <button id="logout-btn" class="btn btn-secondary btn-sm">Logout</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Admin Main Container -->
+  <main class="container" style="flex: 1; padding-bottom: 3rem;">
+    <div class="dashboard-grid">
+      <!-- Sidebar Menu (Sections) -->
+      <aside class="sidebar">
+        <ul class="sidebar-menu">
+          <li><div class="sidebar-link active" id="menu-students">👥 Manage Students</div></li>
+          <li><div class="sidebar-link" id="menu-exams">📝 Manage Exams</div></li>
+          <li><div class="sidebar-link" id="menu-questions">❓ Manage Questions</div></li>
+          <li><div class="sidebar-link" id="menu-submissions">📥 Manage Submissions</div></li>
+          <li><div class="sidebar-link" id="menu-results">🏆 Manage Results</div></li>
+        </ul>
+      </aside>
+
+      <!-- Main Admin Content Area -->
+      <section style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <!-- Header & Action Row -->
+        <div class="section-header" style="margin-bottom: 0.5rem;">
+          <div class="section-title">
+            <h2 id="admin-panel-title">Students Directory</h2>
+            <p id="admin-panel-subtitle">Review, update, and manage student registration records</p>
+          </div>
+          <div>
+            <button class="btn btn-primary" id="admin-add-btn">＋ Add New Entry</button>
+          </div>
+        </div>
+
+        <!-- Dynamic Statistics Counters -->
+        <div class="stats-row" id="admin-stats-row">
+          <!-- Populated by script.js dynamically -->
+        </div>
+
+        <!-- Table Container -->
+        <div class="table-container">
+          <table id="admin-data-table">
+            <thead>
+              <tr id="admin-table-headers">
+                <!-- Dynamically populated headers -->
+              </tr>
+            </thead>
+            <tbody id="admin-table-rows">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- 1. STUDENT MODAL -->
+  <div class="modal" id="modal-student">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-student-title">Add Student</h3>
+        <button class="modal-close" onclick="closeModal('modal-student')">&times;</button>
+      </div>
+      <form id="form-student">
+        <input type="hidden" id="student-mode" value="add">
+        <div class="form-group">
+          <label class="form-label">Student ID (Numeric)</label>
+          <input type="number" id="form-student-id" class="form-input" placeholder="e.g. 102" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" id="form-student-name" class="form-input" placeholder="Rahul Sharma" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="form-student-email" class="form-input" placeholder="rahul@gmail.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" id="form-student-phone" class="form-input" placeholder="9876543210" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">College / Institution</label>
+          <input type="text" id="form-student-college" class="form-input" placeholder="ABC Engineering College" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="form-student-password" class="form-input" placeholder="••••••••" required>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-student')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. EXAM MODAL -->
+  <div class="modal" id="modal-exam">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-exam-title">Add Examination</h3>
+        <button class="modal-close" onclick="closeModal('modal-exam')">&times;</button>
+      </div>
+      <form id="form-exam">
+        <input type="hidden" id="exam-mode" value="add">
+        <div class="form-group">
+          <label class="form-label">Exam ID (Numeric)</label>
+          <input type="number" id="form-exam-id" class="form-input" placeholder="e.g. 202" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Exam Title</label>
+          <input type="text" id="form-exam-title" class="form-input" placeholder="e.g. C++ Programming Assessment" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Subject</label>
+          <input type="text" id="form-exam-subject" class="form-input" placeholder="e.g. C++" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Duration (Minutes)</label>
+          <input type="number" id="form-exam-duration" class="form-input" placeholder="60" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Total Marks</label>
+          <input type="number" id="form-exam-marks" class="form-input" placeholder="100" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Exam Date</label>
+          <input type="date" id="form-exam-date" class="form-input" required>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-exam')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. QUESTION MODAL -->
+  <div class="modal" id="modal-question">
+    <div class="modal-content" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 id="modal-question-title">Add Multiple Choice Question</h3>
+        <button class="modal-close" onclick="closeModal('modal-question')">&times;</button>
+      </div>
+      <form id="form-question">
+        <input type="hidden" id="question-mode" value="add">
+        <div class="form-group">
+          <label class="form-label">Question ID (Numeric)</label>
+          <input type="number" id="form-question-id" class="form-input" placeholder="e.g. 302" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Exam Title</label>
+          <select id="form-question-exam" class="form-input" required>
+            <!-- Filled dynamically with active exams -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Question Text</label>
+          <textarea id="form-question-text" class="form-input" rows="3" placeholder="What is the output of..." required></textarea>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Option A</label>
+            <input type="text" id="form-question-a" class="form-input" placeholder="Option A value" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Option B</label>
+            <input type="text" id="form-question-b" class="form-input" placeholder="Option B value" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Option C</label>
+            <input type="text" id="form-question-c" class="form-input" placeholder="Option C value" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Option D</label>
+            <input type="text" id="form-question-d" class="form-input" placeholder="Option D value" required>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Correct Answer</label>
+            <select id="form-question-correct" class="form-input" required>
+              <option value="a">Option A</option>
+              <option value="b">Option B</option>
+              <option value="c">Option C</option>
+              <option value="d">Option D</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Question Marks</label>
+            <input type="number" id="form-question-marks" class="form-input" placeholder="5" required>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-question')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. SUBMISSION MODAL -->
+  <div class="modal" id="modal-submission">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-submission-title">Add Submission</h3>
+        <button class="modal-close" onclick="closeModal('modal-submission')">&times;</button>
+      </div>
+      <form id="form-submission">
+        <input type="hidden" id="submission-mode" value="add">
+        <input type="hidden" id="form-submission-id">
+        <div class="form-group">
+          <label class="form-label">Student Name</label>
+          <select id="form-submission-student" class="form-input" required>
+            <!-- Filled dynamically with students -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Exam Title</label>
+          <select id="form-submission-exam" class="form-input" required>
+            <!-- Filled dynamically with exams -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Submitted Answers (e.g. Q301:def,Q302:list)</label>
+          <input type="text" id="form-submission-answers" class="form-input" placeholder="Q301:def,Q302:list" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Score obtained</label>
+          <input type="number" id="form-submission-score" class="form-input" placeholder="90" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Submitted Timestamp (YYYY-MM-DD HH:MM:SS)</label>
+          <input type="text" id="form-submission-time" class="form-input" placeholder="2026-08-15 11:30:00" required>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-submission')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. RESULT MODAL -->
+  <div class="modal" id="modal-result">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-result-title">Add Result</h3>
+        <button class="modal-close" onclick="closeModal('modal-result')">&times;</button>
+      </div>
+      <form id="form-result">
+        <input type="hidden" id="result-mode" value="add">
+        <input type="hidden" id="form-result-id">
+        <div class="form-group">
+          <label class="form-label">Student Name</label>
+          <select id="form-result-student" class="form-input" required>
+            <!-- Filled dynamically with students -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Exam Title</label>
+          <select id="form-result-exam" class="form-input" required>
+            <!-- Filled dynamically with exams -->
+          </select>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Total Marks</label>
+            <input type="number" id="form-result-total" class="form-input" placeholder="100" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Obtained Marks</label>
+            <input type="number" id="form-result-obtained" class="form-input" placeholder="90" required>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Percentage (%)</label>
+            <input type="number" id="form-result-percentage" class="form-input" placeholder="90.0" step="0.01" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Result Status</label>
+            <select id="form-result-status" class="form-input" required>
+              <option value="Pass">Pass</option>
+              <option value="Fail">Fail</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-result')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal" id="modal-delete-confirm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Delete Entry?</h3>
+        <button class="modal-close" onclick="closeModal('modal-delete-confirm')">&times;</button>
+      </div>
+      <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+        Are you sure you want to permanently delete this record? This action is irreversible and might affect other linked modules.
+      </p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('modal-delete-confirm')">Cancel</button>
+        <button class="btn btn-danger" id="confirm-delete-btn">Delete Permanently</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Examify Online Examination Portal. Developed for Python-FSD.</p>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+</body>
+</html>

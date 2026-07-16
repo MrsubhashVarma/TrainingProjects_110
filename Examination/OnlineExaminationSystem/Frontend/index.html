@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Examination System | Home</title>
+  <meta name="description" content="Conduct examinations online, manage questions, evaluate student performance, and view instant results on our digital portal.">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <div class="container navbar">
+      <a href="index.html" class="logo">
+        <span>Examify</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="exams.html" class="nav-link">Exams</a></li>
+          <li id="student-dash-nav" style="display:none;"><a href="student_dashboard.html" class="nav-link">Dashboard</a></li>
+          <li id="admin-dash-nav" style="display:none;"><a href="admin_dashboard.html" class="nav-link">Admin Portal</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-btn" aria-label="Toggle Theme">🌓</button>
+        <div id="auth-buttons">
+          <a href="login.html" class="btn btn-secondary btn-sm">Login</a>
+          <a href="register.html" class="btn btn-primary btn-sm">Register</a>
+        </div>
+        <div id="user-menu" style="display:none; align-items:center; gap:1rem;">
+          <span id="user-name" style="font-weight:600; font-size:0.9rem;"></span>
+          <button id="logout-btn" class="btn btn-secondary btn-sm">Logout</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Secure, Reliable & Smart<br><span>Online Examination Portal</span></h1>
+      <p>Assess your skills, get instant grading feedback, and analyze detailed score breakdown metrics for your academic evaluation.</p>
+      <div>
+        <a href="exams.html" class="btn btn-primary btn-lg">Explore Available Exams</a>
+        <a href="register.html" class="btn btn-secondary btn-lg">Student Registration</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Exams Section -->
+  <section class="container" style="padding: 3rem 0;">
+    <div class="section-header">
+      <div class="section-title">
+        <h2>Featured Examinations</h2>
+        <p>Participate in trending certifications and subject exams created by our educators.</p>
+      </div>
+      <a href="exams.html" class="btn btn-secondary btn-sm">View All Exams</a>
+    </div>
+    
+    <div class="grid-3" id="featured-exams-list">
+      <!-- Dynamically populated via script.js -->
+      <div style="grid-column: 1 / -1; text-align: center; color: var(--text-secondary); padding: 2rem;">
+        Loading featured examinations...
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about-section">
+    <div class="container">
+      <div class="section-header" style="text-align: center; display: block; margin-bottom: 3rem;">
+        <h2 style="font-size: 2rem; margin-bottom: 0.5rem;">Why Choose Examify Portal?</h2>
+        <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Our examination system integrates state-of-the-art evaluation pipelines to deliver seamless assessment cycles.</p>
+      </div>
+      
+      <div class="grid-3" style="margin-top: 2rem;">
+        <div class="card">
+          <div style="font-size: 2rem; margin-bottom: 1rem; color: var(--accent);">⏱️</div>
+          <h3 class="card-title">Dynamic Timer Controls</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">Automated exam window timers that guarantee compliance and automatically submit exams when time expires.</p>
+        </div>
+        <div class="card">
+          <div style="font-size: 2rem; margin-bottom: 1rem; color: var(--success);">📊</div>
+          <h3 class="card-title">Instant Results Seeding</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">Submit assessments and immediately receive a circular dashboard overview of your percentage, pass/fail status, and grade card.</p>
+        </div>
+        <div class="card">
+          <div style="font-size: 2rem; margin-bottom: 1rem; color: var(--primary);">🔒</div>
+          <h3 class="card-title">Anti-Cheat Safeguards</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">Randomized question allocations and linear navigation blocks protect the validity and privacy of examinations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Examify Online Examination Portal. Developed for Python-FSD.</p>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+</body>
+</html>

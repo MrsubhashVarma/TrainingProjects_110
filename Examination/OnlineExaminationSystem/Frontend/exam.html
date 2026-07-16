@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Examination System | Active Exam</title>
+  <meta name="description" content="Take your online examination on our secure portal, with automated timer compliance.">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+
+  <!-- Navigation Bar (Minimal during exams to reduce distractions) -->
+  <header>
+    <div class="container navbar">
+      <div class="logo">
+        <span>Examify Portal</span>
+      </div>
+      <div id="exam-title-display" style="font-weight: 700; font-size: 1.1rem; color: var(--accent);">
+        Loading Examination...
+      </div>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-btn" aria-label="Toggle Theme">🌓</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Exam Main Interface -->
+  <main class="container exam-layout" style="flex: 1; padding: 2rem 1.5rem;">
+    <!-- Left Section: Active Question Card -->
+    <section class="exam-panel" id="exam-card-wrapper">
+      <div class="exam-progress">
+        <span id="question-index-label">Question 0 of 0</span>
+        <span id="question-marks-label">Marks: 0</span>
+      </div>
+      
+      <div id="active-question-content">
+        <h2 class="question-text" id="active-question-text">
+          Retrieving examination questions...
+        </h2>
+        
+        <div class="options-container" id="active-options-container">
+          <!-- Populated dynamically with option buttons -->
+        </div>
+      </div>
+      
+      <div class="exam-nav">
+        <button class="btn btn-secondary" id="prev-question-btn" disabled>Previous</button>
+        <button class="btn btn-primary" id="next-question-btn">Next</button>
+      </div>
+    </section>
+
+    <!-- Right Section: Sidebar (Timer & Question Palette) -->
+    <aside style="display: flex; flex-direction: column; gap: 1.5rem;">
+      <!-- Countdown Timer Box -->
+      <div class="sidebar-panel" style="text-align: center;">
+        <h3 style="margin-bottom: 0.75rem;">Time Remaining</h3>
+        <div class="exam-timer" id="countdown-timer">
+          <span>⏱️</span> <span id="timer-display">00:00:00</span>
+        </div>
+      </div>
+
+      <!-- Question Navigation Grid -->
+      <div class="sidebar-panel">
+        <h3>Question Palette</h3>
+        <div class="question-grid" id="question-palette-grid">
+          <!-- Filled dynamically with circular numbers -->
+        </div>
+        <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.8rem; color: var(--text-secondary);">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span style="display: inline-block; width: 0.75rem; height: 0.75rem; background-color: var(--success); border-radius: 50%;"></span>
+            <span>Answered</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span style="display: inline-block; width: 0.75rem; height: 0.75rem; background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 50%;"></span>
+            <span>Not Visited / Skipped</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Section -->
+      <button class="btn btn-danger" id="submit-exam-btn" style="width: 100%; padding: 0.75rem;">Submit Examination</button>
+    </aside>
+  </main>
+
+  <!-- Submit Confirmation Modal -->
+  <div class="modal" id="submit-confirm-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Submit Examination?</h3>
+        <button class="modal-close" id="close-submit-modal-btn">&times;</button>
+      </div>
+      <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+        Are you sure you want to end this examination? Once submitted, your answers will be graded immediately and you cannot revise them.
+      </p>
+      <div id="unanswered-warning" style="display: none; padding: 0.75rem; background-color: var(--error-light); border-left: 4px solid var(--error); border-radius: var(--radius-sm); color: var(--text-primary); margin-bottom: 1.5rem; font-size: 0.85rem;">
+        ⚠️ You have unanswered questions! Please review your answers.
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="cancel-submit-btn">Go Back</button>
+        <button class="btn btn-danger" id="confirm-submit-btn">Submit Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Examify Online Examination Portal. Developed for Python-FSD.</p>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+</body>
+</html>
