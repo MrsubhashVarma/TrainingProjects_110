@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking History - OceanVoyage</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-mode">
+
+    <div id="header-container"></div>
+
+    <main>
+        <h2 class="section-title">My Travel Schedules</h2>
+
+        <!-- Upcoming Journeys Section -->
+        <section style="margin-top: 2rem; margin-bottom: 3rem;">
+            <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--accent);"><i class="fa-solid fa-plane-departure"></i> Upcoming Trips</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Vessel Name</th>
+                            <th>Journey Route</th>
+                            <th>Departure Date</th>
+                            <th>Cabin Class</th>
+                            <th>Booking Status</th>
+                            <th>Payment Status</th>
+                            <th>Controls</th>
+                        </tr>
+                    </thead>
+                    <tbody id="upcoming-trips">
+                        <!-- Populated by script.js initBookingHistoryPage() -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Completed/Cancelled Journeys Section -->
+        <section>
+            <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-muted-dark);"><i class="fa-solid fa-clock-rotate-left"></i> Completed & Cancelled Journeys</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Vessel Name</th>
+                            <th>Journey Route</th>
+                            <th>Date of Journey</th>
+                            <th>Cabin Class</th>
+                            <th>Booking Status</th>
+                            <th>Payment Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="completed-trips">
+                        <!-- Populated by script.js initBookingHistoryPage() -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

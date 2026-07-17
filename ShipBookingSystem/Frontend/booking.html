@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configure Booking - OceanVoyage</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-mode">
+
+    <div id="header-container"></div>
+
+    <main>
+        <h2 class="section-title">Ticket & Cabin Booking</h2>
+
+        <div class="details-grid" style="margin-top: 2rem;">
+            <!-- Left Side: Booking Form -->
+            <div>
+                <div class="info-card">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem;"><i class="fa-regular fa-id-card"></i> Passenger Details</h3>
+                    <form id="booking-form" style="display: flex; flex-direction: column; gap: 1.25rem;">
+                        <div class="form-group">
+                            <label for="passenger-name">Full Name</label>
+                            <input type="text" id="passenger-name" readonly style="opacity: 0.8; cursor: not-allowed;">
+                        </div>
+                        <div class="form-group">
+                            <label for="passenger-email">Email Address</label>
+                            <input type="email" id="passenger-email" readonly style="opacity: 0.8; cursor: not-allowed;">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label for="passenger-phone">Phone Number</label>
+                                <input type="text" id="passenger-phone" readonly style="opacity: 0.8; cursor: not-allowed;">
+                            </div>
+                            <div class="form-group">
+                                <label for="passenger-nationality">Nationality</label>
+                                <input type="text" id="passenger-nationality" readonly style="opacity: 0.8; cursor: not-allowed;">
+                            </div>
+                        </div>
+
+                        <h3 style="font-size: 1.5rem; margin-top: 1.5rem; margin-bottom: 1.5rem; border-top: 1px solid var(--border-dark); padding-top: 1.5rem;"><i class="fa-solid fa-bed"></i> Cabin Configuration</h3>
+                        
+                        <div class="form-group">
+                            <label for="cabin-type">Select Cabin Type</label>
+                            <select id="cabin-type" required>
+                                <option value="Economy">Economy Cabin (Base Fare)</option>
+                                <option value="Deluxe">Deluxe Cabin (+₹ 3,500)</option>
+                                <option value="Suite">Luxury Suite Cabin (+50% Base Fare)</option>
+                                <option value="Family Cabin">Family Cabin (+₹ 5,000)</option>
+                                <option value="VIP Cabin">VIP Cabin (Double Base Fare)</option>
+                            </select>
+                            <small style="color: var(--text-muted-dark); font-size: 0.8rem; margin-top: 0.25rem;">Upgrades feature additional amenities, ocean views, and premium privileges.</small>
+                        </div>
+
+                        <button type="submit" class="btn btn-accent btn-block" style="margin-top: 1.5rem;"><i class="fa-regular fa-circle-check"></i> Confirm Booking</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Side: Booking Summary & Live Receipt -->
+            <div>
+                <div class="info-card" style="position: sticky; top: 100px;">
+                    <h3 style="font-size: 1.5rem; border-bottom: 1px solid var(--border-dark); padding-bottom: 1rem; margin-bottom: 1.5rem;">Price Summary</h3>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 1.25rem; font-size: 0.95rem; margin-bottom: 1.5rem;">
+                        <div>
+                            <span style="font-size: 0.85rem; color: var(--text-muted-dark); text-transform: uppercase;">Selected Journey</span>
+                            <div id="summary-journey" style="margin-top: 0.25rem; font-weight: 500; line-height: 1.4;">
+                                Loading voyage...
+                            </div>
+                        </div>
+
+                        <div style="border-top: 1px dashed var(--border-dark); padding-top: 1rem; display: flex; justify-content: space-between;">
+                            <span>Base Ticket Price:</span>
+                            <span id="summary-base">₹ 0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Cabin Upgrade:</span>
+                            <span id="summary-cabin" style="color: var(--accent);">₹ 0</span>
+                        </div>
+                        <div style="border-top: 1px solid var(--border-dark); padding-top: 1rem; display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 800;">
+                            <span>Total Booking Fare:</span>
+                            <span id="summary-total" style="color: var(--accent);">₹ 0</span>
+                        </div>
+                    </div>
+
+                    <div style="font-size: 0.8rem; color: var(--text-muted-dark); display: flex; gap: 0.5rem; align-items: flex-start; line-height: 1.4;">
+                        <i class="fa-solid fa-lock" style="margin-top: 0.2rem; color: var(--accent);"></i>
+                        <span>By clicking confirm, your seat is reserved, and you will be redirected to the secure payment simulation portal.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

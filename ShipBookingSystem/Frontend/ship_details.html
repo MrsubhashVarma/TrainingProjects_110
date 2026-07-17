@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ship & Journey Details - OceanVoyage</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-mode">
+
+    <div id="header-container"></div>
+
+    <main>
+        <div style="margin-bottom: 2rem;">
+            <a href="ships.html" style="color: var(--accent); font-weight: 600;"><i class="fa-solid fa-arrow-left"></i> Back to Search Listings</a>
+        </div>
+
+        <div id="details-container">
+            <!-- Populated dynamically by script.js initShipDetailsPage() -->
+            <div style="text-align: center; padding: 4rem 2rem;">
+                <i class="fa-solid fa-spinner fa-spin" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <p>Loading journey specifications...</p>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - OceanVoyage</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-mode">
+
+    <div id="header-container"></div>
+
+    <main style="display: flex; align-items: center; justify-content: center; min-height: 70vh;">
+        <div class="auth-wrapper">
+            <div class="auth-header">
+                <h2>Welcome Back</h2>
+                <p style="color: var(--text-muted-dark); font-size: 0.9rem;">Access your passenger panel or manage operations</p>
+            </div>
+            
+            <form id="login-form" style="display: flex; flex-direction: column; gap: 1.25rem;">
+                <div class="form-group">
+                    <label for="login-email"><i class="fa-regular fa-envelope"></i> Email Address</label>
+                    <input type="email" id="login-email" placeholder="enter email address" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password"><i class="fa-solid fa-lock"></i> Password</label>
+                    <input type="password" id="login-password" placeholder="enter password" required>
+                </div>
+                
+                <div style="font-size: 0.85rem; color: var(--text-muted-dark); margin-top: -0.5rem; text-align: right;">
+                    <span>Demo Admin login: <code>admin@cruise.com</code> / <code>admin</code></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1rem;"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+            </form>
+            
+            <div style="margin-top: 1.5rem; text-align: center; font-size: 0.9rem;">
+                <span style="color: var(--text-muted-dark);">Don't have an account? </span>
+                <a href="register.html" style="color: var(--accent); font-weight: 600;">Register Here</a>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="script.js"></script>
+    <script>
+        // Custom Login Form Handler
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-password').value;
+
+            // 1. Check if Admin Login credentials
+            if (email === 'admin@cruise.com' && pass === 'admin') {
+                setCurrentUser({
+                    passenger_id: 0,
+                    full_name: 'Administrator',
+                    email: email,
+                    role: 'admin'
+                });
+                alert('Welcome, Administrator!');
+                window.location.href = 'admin_dashboard.html';
+                return;
+            }
+
+            // 2. Otherwise search passengers list
+            try {
+                const passengers = await PassengersAPI.list();
+                const matched = passengers.find(p => p.email === email && p.password === pass);
+                if (matched) {
+                    setCurrentUser({
+                        passenger_id: matched.passenger_id,
+                        full_name: matched.full_name,
+                        email: matched.email,
+                        phone: matched.phone,
+                        nationality: matched.nationality,
+                        role: 'passenger'
+                    });
+                    alert(`Welcome, ${matched.full_name}!`);
+                    window.location.href = 'passenger_dashboard.html';
+                } else {
+                    alert('Invalid login credentials! Please try again.');
+                }
+            } catch (err) {
+                alert('Connection error. Is the Django API running?');
+            }
+        });
+    </script>
+</body>
+</html>

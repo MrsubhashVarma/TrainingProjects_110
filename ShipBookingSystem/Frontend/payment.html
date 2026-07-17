@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Payment - OceanVoyage</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-mode">
+
+    <div id="header-container"></div>
+
+    <main style="display: flex; align-items: center; justify-content: center; min-height: 75vh;">
+        <div class="auth-wrapper" style="max-width: 500px;">
+            <div class="auth-header">
+                <h2>Secure Checkout</h2>
+                <p style="color: var(--text-muted-dark); font-size: 0.9rem;">Complete your transaction to finalize booking</p>
+            </div>
+
+            <div style="background-color: rgba(20, 184, 166, 0.05); padding: 1.25rem; border-radius: 10px; border: 1px solid rgba(20, 184, 166, 0.15); display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <div>
+                    <span style="font-size: 0.8rem; color: var(--text-muted-dark); text-transform: uppercase;">Booking Reference</span>
+                    <div style="font-size: 1.1rem; font-weight: 700; margin-top: 0.2rem;">Booking ID: #<span id="payment-booking-id">0</span></div>
+                </div>
+                <div style="text-align: right;">
+                    <span style="font-size: 0.8rem; color: var(--text-muted-dark); text-transform: uppercase;">Total Fare</span>
+                    <div id="payment-amount" style="font-size: 1.25rem; font-weight: 800; color: var(--accent); margin-top: 0.2rem;">₹ 0</div>
+                </div>
+            </div>
+
+            <form id="payment-form" style="display: flex; flex-direction: column; gap: 1.25rem;">
+                <div class="form-group">
+                    <label for="payment-method"><i class="fa-regular fa-credit-card"></i> Payment Method</label>
+                    <select id="payment-method" required>
+                        <option value="UPI">UPI (Unified Payments Interface)</option>
+                        <option value="Credit Card">Credit Card</option>
+                        <option value="Debit Card">Debit Card</option>
+                        <option value="Net Banking">Net Banking</option>
+                        <option value="Wallet">Digital Wallet</option>
+                    </select>
+                </div>
+
+                <!-- Simulation Form Card Details -->
+                <div id="card-fields-wrapper" style="border-top: 1px dashed var(--border-dark); padding-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="card-holder"><i class="fa-regular fa-user"></i> Cardholder Name</label>
+                        <input type="text" id="card-holder" placeholder="Rahul Sharma" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="card-number"><i class="fa-solid fa-credit-card"></i> Card Number</label>
+                        <input type="text" id="card-number" placeholder="4532 7182 9382 0182" required>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label for="card-expiry">Expiry Date</label>
+                            <input type="text" id="card-expiry" placeholder="MM/YY" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="card-cvv">CVV</label>
+                            <input type="password" id="card-cvv" placeholder="***" maxlength="3" required>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-accent btn-block" style="margin-top: 1rem;"><i class="fa-solid fa-shield-halved"></i> Authorize Transaction</button>
+            </form>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="script.js"></script>
+    <script>
+        // Custom UI logic for toggling payment details fields
+        const paymentSelect = document.getElementById('payment-method');
+        const cardFields = document.getElementById('card-fields-wrapper');
+
+        paymentSelect.addEventListener('change', (e) => {
+            const method = e.target.value;
+            if (method === 'UPI' || method === 'Net Banking' || method === 'Wallet') {
+                // If digital mode, simplify inputs to simulation view
+                cardFields.innerHTML = `
+                    <div class="form-group">
+                        <label for="digital-id"><i class="fa-solid fa-circle-nodes"></i> Digital ID / Email</label>
+                        <input type="text" id="digital-id" placeholder="name@upi" required>
+                    </div>
+                `;
+            } else {
+                // Return standard credit/debit card inputs
+                cardFields.innerHTML = `
+                    <div class="form-group">
+                        <label for="card-holder"><i class="fa-regular fa-user"></i> Cardholder Name</label>
+                        <input type="text" id="card-holder" placeholder="Rahul Sharma" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="card-number"><i class="fa-solid fa-credit-card"></i> Card Number</label>
+                        <input type="text" id="card-number" placeholder="4532 7182 9382 0182" required>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label for="card-expiry">Expiry Date</label>
+                            <input type="text" id="card-expiry" placeholder="MM/YY" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="card-cvv">CVV</label>
+                            <input type="password" id="card-cvv" placeholder="***" maxlength="3" required>
+                        </div>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

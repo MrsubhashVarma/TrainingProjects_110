@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - OceanVoyage</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-mode">
+
+    <div id="header-container"></div>
+
+    <main>
+        <div class="dashboard-grid">
+            <!-- Sidebar Navigation -->
+            <div class="dashboard-sidebar">
+                <div style="text-align: center; margin-bottom: 2rem; border-bottom: 1px solid var(--border-dark); padding-bottom: 1.5rem;">
+                    <div style="font-size: 3.5rem; color: var(--accent); margin-bottom: 0.5rem;"><i class="fa-solid fa-lock-open"></i></div>
+                    <h3 style="font-size: 1.25rem; font-weight: 700;">Admin Panel</h3>
+                    <p style="font-size: 0.8rem; color: var(--text-muted-dark);">Role: System Administrator</p>
+                </div>
+                <ul class="sidebar-menu">
+                    <li><a href="#" onclick="showAdminTab('passengers')" class="active"><i class="fa-solid fa-users-gear"></i> Passengers</a></li>
+                    <li><a href="#" onclick="showAdminTab('ships')"><i class="fa-solid fa-ship"></i> Ship Management</a></li>
+                    <li><a href="#" onclick="showAdminTab('schedules')"><i class="fa-solid fa-route"></i> Routes & Schedules</a></li>
+                    <li><a href="#" onclick="showAdminTab('bookings')"><i class="fa-solid fa-book-bookmark"></i> Bookings Log</a></li>
+                    <li><a href="#" onclick="showAdminTab('payments')"><i class="fa-solid fa-file-invoice-dollar"></i> Payments Log</a></li>
+                </ul>
+            </div>
+
+            <!-- Content Area -->
+            <div>
+                <!-- Panel 1: Passengers -->
+                <div id="panel-passengers" class="admin-panel-content">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2 style="font-size: 1.75rem;"><i class="fa-solid fa-users"></i> Passenger Directory</h2>
+                        <button onclick="openAddPassengerModal()" class="btn btn-accent"><i class="fa-solid fa-user-plus"></i> Add Passenger</button>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Nationality</th>
+                                    <th>Passport</th>
+                                    <th>Controls</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-table-passengers"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Panel 2: Ships -->
+                <div id="panel-ships" class="admin-panel-content" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2 style="font-size: 1.75rem;"><i class="fa-solid fa-ship"></i> Fleet Management</h2>
+                        <button onclick="openAddShipModal()" class="btn btn-accent"><i class="fa-solid fa-plus"></i> Add Vessel</button>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Ship ID</th>
+                                    <th>Ship Name</th>
+                                    <th>Vessel Type</th>
+                                    <th>Capacity</th>
+                                    <th>Operator Name</th>
+                                    <th>Operational Status</th>
+                                    <th>Controls</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-table-ships"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Panel 3: Schedules -->
+                <div id="panel-schedules" class="admin-panel-content" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2 style="font-size: 1.75rem;"><i class="fa-solid fa-route"></i> Journeys & Route Schedules</h2>
+                        <button onclick="openAddScheduleModal()" class="btn btn-accent"><i class="fa-solid fa-calendar-plus"></i> Add Schedule</button>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Schedule ID</th>
+                                    <th>Vessel Name</th>
+                                    <th>Source Port</th>
+                                    <th>Destination Port</th>
+                                    <th>Departure Schedule</th>
+                                    <th>Arrival Schedule</th>
+                                    <th>Base Fare</th>
+                                    <th>Controls</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-table-schedules"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Panel 4: Bookings -->
+                <div id="panel-bookings" class="admin-panel-content" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2 style="font-size: 1.75rem;"><i class="fa-solid fa-receipt"></i> Passenger Bookings Logs</h2>
+                        <button onclick="openAddBookingModal()" class="btn btn-accent"><i class="fa-solid fa-circle-plus"></i> Register Booking</button>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Booking ID</th>
+                                    <th>Passenger Name</th>
+                                    <th>Ship Name</th>
+                                    <th>Journey Route</th>
+                                    <th>Journey Date</th>
+                                    <th>Cabin Type</th>
+                                    <th>Total Amount</th>
+                                    <th>Status</th>
+                                    <th>Controls</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-table-bookings"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Panel 5: Payments -->
+                <div id="panel-payments" class="admin-panel-content" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2 style="font-size: 1.75rem;"><i class="fa-solid fa-file-invoice-dollar"></i> Transaction Audits</h2>
+                        <button onclick="openAddPaymentModal()" class="btn btn-accent"><i class="fa-solid fa-circle-plus"></i> Register Payment</button>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Payment ID</th>
+                                    <th>Booking ID</th>
+                                    <th>Passenger</th>
+                                    <th>Amount Paid</th>
+                                    <th>Payment Method</th>
+                                    <th>Payment Status</th>
+                                    <th>Transaction Ref</th>
+                                    <th>Transaction Date</th>
+                                    <th>Controls</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-table-payments"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ==================== POPUP DIALOGS / CRUD MODALS ==================== -->
+
+    <!-- 1. Passenger Modal -->
+    <div id="modal-passenger" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="passenger-modal-title">Add Passenger</h3>
+                <button onclick="closeModal('modal-passenger')" class="modal-close">&times;</button>
+            </div>
+            <form id="form-passenger">
+                <input type="hidden" id="passenger_id_pk" name="passenger_id_pk">
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="pass-id-field">Passenger ID (for seeding/manual assignment)</label>
+                        <input type="number" id="pass-id-field" name="passenger_id" placeholder="Optional Auto Incremented ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="pass-name-field">Full Name</label>
+                        <input type="text" id="pass-name-field" name="full_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass-email-field">Email Address</label>
+                        <input type="email" id="pass-email-field" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass-phone-field">Phone Number</label>
+                        <input type="text" id="pass-phone-field" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass-nationality-field">Nationality</label>
+                        <input type="text" id="pass-nationality-field" name="nationality" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass-passport-field">Passport Number</label>
+                        <input type="text" id="pass-passport-field" name="passport_number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass-password-field">Password</label>
+                        <input type="password" id="pass-password-field" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. Ship Modal -->
+    <div id="modal-ship" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="ship-modal-title">Add Ship</h3>
+                <button onclick="closeModal('modal-ship')" class="modal-close">&times;</button>
+            </div>
+            <form id="form-ship">
+                <input type="hidden" id="ship_id_pk" name="ship_id_pk">
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="ship-id-field">Ship ID</label>
+                        <input type="number" id="ship-id-field" name="ship_id" placeholder="Optional Auto Incremented ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="ship-name-field">Ship Name</label>
+                        <input type="text" id="ship-name-field" name="ship_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ship-type-field">Ship Type</label>
+                        <select id="ship-type-field" name="ship_type" required>
+                            <option value="Cruise Ship">Cruise Ship</option>
+                            <option value="Ferry">Ferry</option>
+                            <option value="Cargo Passenger Ship">Cargo Passenger Ship</option>
+                            <option value="Luxury Yacht">Luxury Yacht</option>
+                            <option value="River Cruise">River Cruise</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ship-capacity-field">Max Capacity</label>
+                        <input type="number" id="ship-capacity-field" name="capacity" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ship-operator-field">Operator Name</label>
+                        <input type="text" id="ship-operator-field" name="operator_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ship-status-field">Status</label>
+                        <select id="ship-status-field" name="status" required>
+                            <option value="Active">Active</option>
+                            <option value="Maintenance">Maintenance</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. Schedule Modal -->
+    <div id="modal-schedule" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="schedule-modal-title">Add Schedule</h3>
+                <button onclick="closeModal('modal-schedule')" class="modal-close">&times;</button>
+            </div>
+            <form id="form-schedule">
+                <input type="hidden" id="schedule_id_pk" name="schedule_id_pk">
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="sch-id-field">Schedule ID</label>
+                        <input type="number" id="sch-id-field" name="schedule_id" placeholder="Optional Auto Incremented ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="sch-ship-field">Ship Name</label>
+                        <input type="text" id="sch-ship-field" name="ship_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sch-source-field">Source Port</label>
+                        <input type="text" id="sch-source-field" name="source_port" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sch-dest-field">Destination Port</label>
+                        <input type="text" id="sch-dest-field" name="destination_port" required>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label for="sch-depdate-field">Departure Date</label>
+                            <input type="date" id="sch-depdate-field" name="departure_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sch-deptime-field">Departure Time</label>
+                            <input type="time" id="sch-deptime-field" name="departure_time" required>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label for="sch-arrdate-field">Arrival Date</label>
+                            <input type="date" id="sch-arrdate-field" name="arrival_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sch-arrtime-field">Arrival Time</label>
+                            <input type="time" id="sch-arrtime-field" name="arrival_time" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sch-fare-field">Base Ticket Fare</label>
+                        <input type="number" id="sch-fare-field" name="fare" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 4. Booking Modal -->
+    <div id="modal-booking" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="booking-modal-title">Add Booking</h3>
+                <button onclick="closeModal('modal-booking')" class="modal-close">&times;</button>
+            </div>
+            <form id="form-booking">
+                <input type="hidden" id="booking_id_pk" name="booking_id_pk">
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="book-id-field">Booking ID</label>
+                        <input type="number" id="book-id-field" name="booking_id" placeholder="Optional Auto Incremented ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="book-passenger-field">Passenger Name</label>
+                        <input type="text" id="book-passenger-field" name="passenger_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="book-ship-field">Ship Name</label>
+                        <input type="text" id="book-ship-field" name="ship_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="book-cabin-field">Cabin Type</label>
+                        <select id="book-cabin-field" name="cabin_type" required>
+                            <option value="Economy">Economy</option>
+                            <option value="Deluxe">Deluxe</option>
+                            <option value="Suite">Suite</option>
+                            <option value="Family Cabin">Family Cabin</option>
+                            <option value="VIP Cabin">VIP Cabin</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="book-date-field">Journey Date</label>
+                        <input type="date" id="book-date-field" name="journey_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="book-source-field">Source Port</label>
+                        <input type="text" id="book-source-field" name="source_port" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="book-dest-field">Destination Port</label>
+                        <input type="text" id="book-dest-field" name="destination_port" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="book-total-field">Total Amount</label>
+                        <input type="number" id="book-total-field" name="total_amount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="book-status-field">Booking Status</label>
+                        <select id="book-status-field" name="booking_status" required>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Waiting">Waiting</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 5. Payment Modal -->
+    <div id="modal-payment" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="payment-modal-title">Add Payment</h3>
+                <button onclick="closeModal('modal-payment')" class="modal-close">&times;</button>
+            </div>
+            <form id="form-payment">
+                <input type="hidden" id="payment_id_pk" name="payment_id_pk">
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="pay-id-field">Payment ID</label>
+                        <input type="number" id="pay-id-field" name="payment_id" placeholder="Optional Auto Incremented ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="pay-booking-field">Booking ID</label>
+                        <input type="number" id="pay-booking-field" name="booking_id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pay-passenger-field">Passenger Name</label>
+                        <input type="text" id="pay-passenger-field" name="passenger_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pay-amount-field">Paid Amount</label>
+                        <input type="number" id="pay-amount-field" name="amount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pay-method-field">Payment Method</label>
+                        <select id="pay-method-field" name="payment_method" required>
+                            <option value="UPI">UPI</option>
+                            <option value="Credit Card">Credit Card</option>
+                            <option value="Debit Card">Debit Card</option>
+                            <option value="Net Banking">Net Banking</option>
+                            <option value="Wallet">Wallet</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pay-status-field">Payment Status</label>
+                        <select id="pay-status-field" name="payment_status" required>
+                            <option value="Success">Success</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Failed">Failed</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pay-txn-field">Transaction ID</label>
+                        <input type="text" id="pay-txn-field" name="transaction_id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pay-date-field">Transaction Date</label>
+                        <input type="date" id="pay-date-field" name="payment_date" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

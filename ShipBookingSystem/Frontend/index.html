@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - OceanVoyage Ship Booking System</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-mode">
+
+    <!-- Header will be dynamically injected by script.js -->
+    <div id="header-container"></div>
+
+    <!-- Hero Banner Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Embark on Your Next Great Ocean Adventure</h1>
+            <p class="hero-subtitle">Book luxury cruise liner tickets, search routes, reserve elite cabins, and set sail on world-class vessels with OceanVoyage.</p>
+            <a href="ships.html" class="btn btn-accent btn-lg"><i class="fa-solid fa-compass"></i> Explore All Journeys</a>
+        </div>
+    </section>
+
+    <!-- Search Journey Form -->
+    <div class="search-container">
+        <form id="search-journey-form" class="search-form">
+            <div class="form-group">
+                <label for="source-port"><i class="fa-solid fa-ship"></i> From (Source Port)</label>
+                <select id="source-port" required>
+                    <option value="">Select departure port</option>
+                    <option value="Chennai Port">Chennai Port</option>
+                    <option value="Mumbai Port">Mumbai Port</option>
+                    <option value="Kochi Port">Kochi Port</option>
+                    <option value="Kolkata Port">Kolkata Port</option>
+                    <option value="Varanasi Port">Varanasi Port</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dest-port"><i class="fa-solid fa-anchor"></i> To (Destination Port)</label>
+                <select id="dest-port" required>
+                    <option value="">Select destination port</option>
+                    <option value="Port Blair">Port Blair</option>
+                    <option value="Goa Port">Goa Port</option>
+                    <option value="Lakshadweep Port">Lakshadweep Port</option>
+                    <option value="Patna Port">Patna Port</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="departure-date"><i class="fa-regular fa-calendar-days"></i> Travel Date</label>
+                <input type="date" id="departure-date" required>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary btn-block" style="height: 45px;"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Main Content Area -->
+    <main>
+        <!-- Featured Cruises Section -->
+        <section style="margin-bottom: 4rem;">
+            <h2 class="section-title">Featured Cruise Liners</h2>
+            <div id="featured-cruises" class="grid-cards" style="margin-top: 2rem;">
+                <!-- Dynamically loaded from script.js -->
+            </div>
+        </section>
+
+        <!-- Latest Offers Section -->
+        <section>
+            <h2 class="section-title">Exclusive Cruise & Journey Deals</h2>
+            <div class="grid-cards" style="margin-top: 2rem;">
+                <!-- Offer 1 -->
+                <div class="card">
+                    <div class="card-img-container">
+                        <div class="card-img-placeholder" style="background-image: url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&auto=format&fit=crop&q=80')"></div>
+                        <span class="card-badge btn-accent" style="background-color: #f43f5e; color: white;">20% OFF</span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Island Escape - Andaman Islands</h3>
+                        <p class="card-desc">Book your Deluxe cabin for the Chennai to Port Blair route and receive 20% off all onboard restaurant meals.</p>
+                        <div class="card-meta">
+                            <span style="font-size: 0.85rem; font-weight: 600; color: var(--accent);">Promo: ISLAND20</span>
+                            <span class="card-price" style="font-size: 1rem; color: var(--text-muted-dark); text-decoration: line-through;">&#8377; 8,500</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Offer 2 -->
+                <div class="card">
+                    <div class="card-img-container">
+                        <div class="card-img-placeholder" style="background-image: url('https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=600&auto=format&fit=crop&q=80')"></div>
+                        <span class="card-badge btn-accent" style="background-color: #eab308; color: black;">Premium Perk</span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Goa Luxury Weekend</h3>
+                        <p class="card-desc">Book a Suite Cabin on the Sea Empress yacht from Mumbai to Goa and enjoy free lounge and spa facility access.</p>
+                        <div class="card-meta">
+                            <span style="font-size: 0.85rem; font-weight: 600; color: var(--accent);">Promo: LUXWEEK</span>
+                            <span class="card-price" style="font-size: 1.1rem; color: var(--accent);">Bonus Included</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Offer 3 -->
+                <div class="card">
+                    <div class="card-img-container">
+                        <div class="card-img-placeholder" style="background-image: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&auto=format&fit=crop&q=80')"></div>
+                        <span class="card-badge btn-accent" style="background-color: #10b981; color: white;">Family Saver</span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Holy River Passage</h3>
+                        <p class="card-desc">Book a Family Cabin on the River Queen for the Varanasi-Patna route. Children under 12 travel absolutely free!</p>
+                        <div class="card-meta">
+                            <span style="font-size: 0.85rem; font-weight: 600; color: var(--accent);">Promo: FAMILYSAVE</span>
+                            <span class="card-price" style="font-size: 1rem; color: var(--text-muted-dark); text-decoration: line-through;">&#8377; 3,200</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer will be dynamically injected by script.js -->
+    <div id="footer-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

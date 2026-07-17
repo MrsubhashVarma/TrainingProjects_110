@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passenger Dashboard - OceanVoyage</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-mode">
+
+    <div id="header-container"></div>
+
+    <main>
+        <div class="dashboard-grid">
+            <!-- Sidebar Panel -->
+            <div class="dashboard-sidebar">
+                <div style="text-align: center; margin-bottom: 2rem; border-bottom: 1px solid var(--border-dark); padding-bottom: 1.5rem;">
+                    <div style="font-size: 3.5rem; color: var(--accent); margin-bottom: 0.5rem;"><i class="fa-solid fa-circle-user"></i></div>
+                    <h3 id="sidebar-user-name" style="font-size: 1.2rem; font-weight: 700;">Passenger Panel</h3>
+                    <p style="font-size: 0.8rem; color: var(--text-muted-dark);">Role: Passenger</p>
+                </div>
+                <ul class="sidebar-menu">
+                    <li><a href="passenger_dashboard.html" class="active"><i class="fa-solid fa-chart-line"></i> Dashboard Overview</a></li>
+                    <li><a href="booking_history.html"><i class="fa-solid fa-ticket"></i> My Bookings</a></li>
+                    <li><a href="ships.html"><i class="fa-solid fa-magnifying-glass-chart"></i> Search Voyaging Ships</a></li>
+                </ul>
+            </div>
+
+            <!-- Dashboard Contents -->
+            <div>
+                <h2 style="font-size: 2rem; margin-bottom: 1.5rem;">Overview Dashboard</h2>
+
+                <!-- Stat Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fa-solid fa-suitcase-rolling" style="font-size: 1.5rem; color: var(--primary);"></i>
+                        <div style="font-size: 0.85rem; color: var(--text-muted-dark); text-transform: uppercase; margin-top: 0.5rem;">Total Bookings</div>
+                        <div id="dash-total-bookings" class="stat-val">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fa-solid fa-calendar-check" style="font-size: 1.5rem; color: var(--accent);"></i>
+                        <div style="font-size: 0.85rem; color: var(--text-muted-dark); text-transform: uppercase; margin-top: 0.5rem;">Upcoming Trips</div>
+                        <div id="dash-upcoming" class="stat-val">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fa-solid fa-circle-check" style="font-size: 1.5rem; color: #10b981;"></i>
+                        <div style="font-size: 0.85rem; color: var(--text-muted-dark); text-transform: uppercase; margin-top: 0.5rem;">Completed Trips</div>
+                        <div id="dash-completed" class="stat-val">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fa-solid fa-wallet" style="font-size: 1.5rem; color: #eab308;"></i>
+                        <div style="font-size: 0.85rem; color: var(--text-muted-dark); text-transform: uppercase; margin-top: 0.5rem;">Total Spent</div>
+                        <div id="dash-spent" class="stat-val">₹ 0</div>
+                    </div>
+                </div>
+
+                <!-- Transaction Table -->
+                <div class="info-card">
+                    <h3 style="font-size: 1.25rem; margin-bottom: 1rem;"><i class="fa-solid fa-receipt"></i> Recent Transactions & Payment Logs</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Payment ID</th>
+                                    <th>Booking ID</th>
+                                    <th>Date</th>
+                                    <th>Method</th>
+                                    <th>Paid Amount</th>
+                                    <th>Transaction Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dash-payment-history">
+                                <!-- Populated by script.js initPassengerDashboard() -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="script.js"></script>
+    <script>
+        // Set name dynamically on sidebar
+        const currentUsr = getCurrentUser();
+        if (currentUsr) {
+            document.getElementById('sidebar-user-name').innerText = currentUsr.full_name;
+        }
+    </script>
+</body>
+</html>

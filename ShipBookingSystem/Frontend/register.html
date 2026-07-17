@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passenger Registration - OceanVoyage</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-mode">
+
+    <div id="header-container"></div>
+
+    <main style="display: flex; align-items: center; justify-content: center; min-height: 80vh;">
+        <div class="auth-wrapper" style="max-width: 500px;">
+            <div class="auth-header">
+                <h2>Create Account</h2>
+                <p style="color: var(--text-muted-dark); font-size: 0.9rem;">Register as a passenger to start reserving journeys</p>
+            </div>
+            
+            <form id="register-form" style="display: flex; flex-direction: column; gap: 1rem;">
+                <div class="form-group">
+                    <label for="reg-name"><i class="fa-regular fa-user"></i> Full Name</label>
+                    <input type="text" id="reg-name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email"><i class="fa-regular fa-envelope"></i> Email Address</label>
+                    <input type="email" id="reg-email" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-phone"><i class="fa-solid fa-phone"></i> Phone Number</label>
+                    <input type="text" id="reg-phone" placeholder="9876543210" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-nationality"><i class="fa-solid fa-globe"></i> Nationality</label>
+                    <input type="text" id="reg-nationality" placeholder="Indian" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-passport"><i class="fa-regular fa-address-card"></i> Passport Number</label>
+                    <input type="text" id="reg-passport" placeholder="Z1234567" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password"><i class="fa-solid fa-lock"></i> Password</label>
+                    <input type="password" id="reg-password" placeholder="Min 6 characters" required>
+                </div>
+
+                <button type="submit" class="btn btn-accent btn-block" style="margin-top: 1rem;"><i class="fa-solid fa-user-plus"></i> Register</button>
+            </form>
+            
+            <div style="margin-top: 1.5rem; text-align: center; font-size: 0.9rem;">
+                <span style="color: var(--text-muted-dark);">Already have an account? </span>
+                <a href="login.html" style="color: var(--primary); font-weight: 600;">Login Here</a>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="script.js"></script>
+    <script>
+        // Custom registration form submission
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const payload = {
+                full_name: document.getElementById('reg-name').value,
+                email: document.getElementById('reg-email').value,
+                phone: document.getElementById('reg-phone').value,
+                nationality: document.getElementById('reg-nationality').value,
+                passport_number: document.getElementById('reg-passport').value,
+                password: document.getElementById('reg-password').value
+            };
+
+            try {
+                const result = await PassengersAPI.add(payload);
+                if (result.status === 'success') {
+                    alert('Registration Completed successfully! Please login with your credentials.');
+                    window.location.href = 'login.html';
+                } else {
+                    alert('Registration Failed: ' + result.message);
+                }
+            } catch (err) {
+                alert('Connection to server failed. Is the Django API active?');
+            }
+        });
+    </script>
+</body>
+</html>
